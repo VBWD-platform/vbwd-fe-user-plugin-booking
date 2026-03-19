@@ -39,19 +39,6 @@ jobs:
         working-directory: vbwd-fe-user
         run: rm -f package-lock.json && npm install
 
-      - name: ESLint
+      - name: Run pre-commit checks (style + unit)
         working-directory: vbwd-fe-user
-        run: npx eslint plugins/booking/ --ext .vue,.ts,.tsx || true
-
-      - name: TypeScript check
-        working-directory: vbwd-fe-user
-        run: npx vue-tsc --noEmit || true
-
-      - name: Unit tests
-        working-directory: vbwd-fe-user
-        run: |
-          if find plugins/booking/tests -name '*.spec.ts' 2>/dev/null | head -1 | grep -q .; then
-            npx vitest run plugins/booking/tests/unit/
-          else
-            echo "No unit tests yet — skipping"
-          fi
+        run: ./bin/pre-commit-check.sh --unit

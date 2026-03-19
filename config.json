@@ -1,0 +1,7 @@
+{
+  "booking": {
+    "catalogue_route": "/booking",
+    "dashboard_route": "/dashboard/bookings",
+    "cms_widget": "BookingCatalogue"
+  }
+}

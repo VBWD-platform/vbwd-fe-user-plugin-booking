@@ -6,16 +6,15 @@ export const bookingPlugin: IPlugin = {
 
   install(sdk: IPlatformSDK) {
     // Register CMS vue-component widgets
-    try {
-      const { registerCmsVueComponent } = require('../cms/src/registry/vueComponentRegistry');
-      Promise.all([
-        import('./booking/views/BookingCatalogue.vue'),
-      ]).then(([catalogue]) => {
-        registerCmsVueComponent('BookingCatalogue', catalogue.default);
+    import('../cms/src/registry/vueComponentRegistry')
+      .then(({ registerCmsVueComponent }) => {
+        import('./booking/views/BookingCatalogue.vue').then((catalogue) => {
+          registerCmsVueComponent('BookingCatalogue', catalogue.default);
+        });
+      })
+      .catch(() => {
+        // CMS plugin not installed — skip widget registration
       });
-    } catch {
-      // CMS plugin not installed — skip widget registration
-    }
 
     // Public CMS routes (rendered inside CMS layout)
     sdk.addRoute({

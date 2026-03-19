@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 import { useBookingStore } from '../../../booking/stores/booking';
 
-vi.mock('vbwd-view-component', () => ({
+vi.mock('@/api', () => ({
   api: {
     get: vi.fn(),
     put: vi.fn(),
@@ -11,7 +11,7 @@ vi.mock('vbwd-view-component', () => ({
   },
 }));
 
-import { api } from 'vbwd-view-component';
+import { api } from '@/api';
 
 describe('useBookingStore', () => {
   beforeEach(() => {

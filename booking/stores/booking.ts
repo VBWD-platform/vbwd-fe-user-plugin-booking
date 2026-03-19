@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { api } from 'vbwd-view-component';
+import { api } from '@/api';
 
 export interface ResourceCategory {
   id: string;

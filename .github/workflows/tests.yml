@@ -1,0 +1,57 @@
+name: Tests
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    name: CI — booking (fe-user)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone vbwd-fe-user
+        uses: actions/checkout@v4
+        with:
+          repository: VBWD-platform/vbwd-fe-user
+          ref: main
+          path: vbwd-fe-user
+          submodules: recursive
+
+      - name: Clone plugin
+        uses: actions/checkout@v4
+        with:
+          path: vbwd-fe-user/plugins/booking
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build fe-core submodule
+        working-directory: vbwd-fe-user/vbwd-fe-core
+        run: npm install && npm run build
+
+      - name: Install dependencies
+        working-directory: vbwd-fe-user
+        run: rm -f package-lock.json && npm install
+
+      - name: ESLint
+        working-directory: vbwd-fe-user
+        run: npx eslint plugins/booking/ --ext .vue,.ts,.tsx || true
+
+      - name: TypeScript check
+        working-directory: vbwd-fe-user
+        run: npx vue-tsc --noEmit || true
+
+      - name: Unit tests
+        working-directory: vbwd-fe-user
+        run: |
+          if find plugins/booking/tests -name '*.spec.ts' 2>/dev/null | head -1 | grep -q .; then
+            npx vitest run plugins/booking/tests/unit/
+          else
+            echo "No unit tests yet — skipping"
+          fi

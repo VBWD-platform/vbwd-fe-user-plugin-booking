@@ -1,0 +1,58 @@
+{
+  "booking": {
+    "catalogue": {
+      "title": "预订",
+      "search": "搜索资源...",
+      "switchToList": "切换到列表",
+      "switchToGrid": "切换到网格",
+      "all": "全部",
+      "loading": "加载中...",
+      "noResources": "暂无可用资源。",
+      "spots": "{count} 个名额"
+    },
+    "detail": {
+      "loading": "加载中...",
+      "notFound": "未找到资源",
+      "bookNow": "立即预订",
+      "availability": "可用时间",
+      "selectDate": "选择日期：",
+      "available": "{count} 个可用",
+      "noSlots": "该日期没有可用时段。",
+      "pickDate": "请选择日期以查看可用时段。",
+      "requiredFields": "预订所需信息",
+      "required": "必填",
+      "backToCatalogue": "返回目录"
+    },
+    "form": {
+      "bookTitle": "预订：{name}",
+      "loading": "加载中...",
+      "notFound": "未找到资源",
+      "selectDate": "选择日期",
+      "selectTime": "选择时间",
+      "checkIn": "入住日期",
+      "checkOut": "退房日期",
+      "available": "{count} 个可用",
+      "noSlots": "该日期没有可用时段。",
+      "additionalInfo": "附加信息",
+      "notes": "备注（可选）",
+      "notesPlaceholder": "特殊要求...",
+      "confirmBooking": "确认预订",
+      "booking": "预订中...",
+      "cancel": "取消",
+      "bookingFailed": "预订失败，请重试。"
+    },
+    "myBookings": {
+      "title": "我的预订",
+      "loading": "加载中...",
+      "noBookings": "您还没有预订。",
+      "unknown": "未知",
+      "view": "查看",
+      "table": {
+        "resource": "资源",
+        "date": "日期",
+        "status": "状态",
+        "actions": "操作"
+      }
+    }
+  }
+}

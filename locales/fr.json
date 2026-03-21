@@ -1,0 +1,58 @@
+{
+  "booking": {
+    "catalogue": {
+      "title": "Réservation",
+      "search": "Rechercher des ressources...",
+      "switchToList": "Passer en liste",
+      "switchToGrid": "Passer en grille",
+      "all": "Tous",
+      "loading": "Chargement...",
+      "noResources": "Aucune ressource disponible.",
+      "spots": "{count} places"
+    },
+    "detail": {
+      "loading": "Chargement...",
+      "notFound": "Ressource introuvable",
+      "bookNow": "Réserver maintenant",
+      "availability": "Disponibilité",
+      "selectDate": "Sélectionner une date :",
+      "available": "{count} disponibles",
+      "noSlots": "Aucun créneau disponible pour cette date.",
+      "pickDate": "Choisissez une date pour voir les créneaux disponibles.",
+      "requiredFields": "Informations de réservation requises",
+      "required": "obligatoire",
+      "backToCatalogue": "Retour au catalogue"
+    },
+    "form": {
+      "bookTitle": "Réserver : {name}",
+      "loading": "Chargement...",
+      "notFound": "Ressource introuvable",
+      "selectDate": "Sélectionner une date",
+      "selectTime": "Sélectionner un horaire",
+      "checkIn": "Date d'arrivée",
+      "checkOut": "Date de départ",
+      "available": "{count} disponibles",
+      "noSlots": "Aucun créneau disponible pour cette date.",
+      "additionalInfo": "Informations complémentaires",
+      "notes": "Notes (facultatif)",
+      "notesPlaceholder": "Demandes spéciales...",
+      "confirmBooking": "Confirmer la réservation",
+      "booking": "Réservation en cours...",
+      "cancel": "Annuler",
+      "bookingFailed": "La réservation a échoué. Veuillez réessayer."
+    },
+    "myBookings": {
+      "title": "Mes réservations",
+      "loading": "Chargement...",
+      "noBookings": "Vous n'avez pas encore de réservations.",
+      "unknown": "Inconnu",
+      "view": "Voir",
+      "table": {
+        "resource": "Ressource",
+        "date": "Date",
+        "status": "Statut",
+        "actions": "Actions"
+      }
+    }
+  }
+}

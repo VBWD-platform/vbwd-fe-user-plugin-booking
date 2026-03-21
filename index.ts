@@ -1,33 +1,65 @@
 import type { IPlugin, IPlatformSDK } from 'vbwd-view-component';
+import en from './locales/en.json';
+import de from './locales/de.json';
+import es from './locales/es.json';
+import fr from './locales/fr.json';
+import ja from './locales/ja.json';
+import ru from './locales/ru.json';
+import th from './locales/th.json';
+import zh from './locales/zh.json';
 
 export const bookingPlugin: IPlugin = {
   name: 'booking',
   version: '0.1.0',
 
   install(sdk: IPlatformSDK) {
+    // Translations
+    sdk.addTranslations('en', en);
+    sdk.addTranslations('de', de);
+    sdk.addTranslations('es', es);
+    sdk.addTranslations('fr', fr);
+    sdk.addTranslations('ja', ja);
+    sdk.addTranslations('ru', ru);
+    sdk.addTranslations('th', th);
+    sdk.addTranslations('zh', zh);
+
     // Register CMS vue-component widgets
     import('../cms/src/registry/vueComponentRegistry')
       .then(({ registerCmsVueComponent }) => {
-        import('./booking/views/BookingCatalogue.vue').then((catalogue) => {
+        Promise.all([
+          import('./booking/views/BookingCatalogue.vue'),
+          import('./booking/views/BookingResourceDetail.vue'),
+        ]).then(([catalogue, detail]) => {
           registerCmsVueComponent('BookingCatalogue', catalogue.default);
+          registerCmsVueComponent('BookingResourceDetail', detail.default);
         });
       })
       .catch(() => {
         // CMS plugin not installed — skip widget registration
       });
 
-    // Public CMS routes (rendered inside CMS layout)
+    // Public CMS routes — rendered via CmsPage.vue which resolves the layout + widgets
     sdk.addRoute({
       path: '/booking',
       name: 'booking-catalogue',
-      component: () => import('./booking/views/BookingCatalogue.vue'),
+      component: () => import('../cms/src/views/CmsPage.vue'),
+      props: { slug: 'booking' },
       meta: { requiresAuth: false, cmsLayout: true },
     });
 
     sdk.addRoute({
       path: '/booking/:slug',
       name: 'booking-resource',
-      component: () => import('./booking/views/BookingCatalogue.vue'),
+      component: () => import('../cms/src/views/CmsPage.vue'),
+      props: { slug: 'booking-resource-detail' },
+      meta: { requiresAuth: false, cmsLayout: true },
+    });
+
+    // Booking form (public page with CMS layout — auth checked on submit)
+    sdk.addRoute({
+      path: '/booking/:slug/book',
+      name: 'booking-form',
+      component: () => import('./booking/views/BookingForm.vue'),
       meta: { requiresAuth: false, cmsLayout: true },
     });
 

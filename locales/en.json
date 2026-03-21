@@ -1,0 +1,58 @@
+{
+  "booking": {
+    "catalogue": {
+      "title": "Booking",
+      "search": "Search resources...",
+      "switchToList": "Switch to list",
+      "switchToGrid": "Switch to grid",
+      "all": "All",
+      "loading": "Loading...",
+      "noResources": "No resources available.",
+      "spots": "{count} spots"
+    },
+    "detail": {
+      "loading": "Loading...",
+      "notFound": "Resource not found",
+      "bookNow": "Book Now",
+      "availability": "Availability",
+      "selectDate": "Select date:",
+      "available": "{count} available",
+      "noSlots": "No slots available for this date.",
+      "pickDate": "Pick a date to see available slots.",
+      "requiredFields": "Booking Information Required",
+      "required": "required",
+      "backToCatalogue": "Back to catalogue"
+    },
+    "form": {
+      "bookTitle": "Book: {name}",
+      "loading": "Loading...",
+      "notFound": "Resource not found",
+      "selectDate": "Select Date",
+      "selectTime": "Select Time",
+      "checkIn": "Check-in Date",
+      "checkOut": "Check-out Date",
+      "available": "{count} available",
+      "noSlots": "No slots available for this date.",
+      "additionalInfo": "Additional Information",
+      "notes": "Notes (optional)",
+      "notesPlaceholder": "Any special requests...",
+      "confirmBooking": "Confirm Booking",
+      "booking": "Booking...",
+      "cancel": "Cancel",
+      "bookingFailed": "Booking failed. Please try again."
+    },
+    "myBookings": {
+      "title": "My Bookings",
+      "loading": "Loading...",
+      "noBookings": "You have no bookings yet.",
+      "unknown": "Unknown",
+      "view": "View",
+      "table": {
+        "resource": "Resource",
+        "date": "Date",
+        "status": "Status",
+        "actions": "Actions"
+      }
+    }
+  }
+}

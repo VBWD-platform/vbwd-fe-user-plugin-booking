@@ -1,0 +1,58 @@
+{
+  "booking": {
+    "catalogue": {
+      "title": "การจอง",
+      "search": "ค้นหาทรัพยากร...",
+      "switchToList": "สลับเป็นรายการ",
+      "switchToGrid": "สลับเป็นตาราง",
+      "all": "ทั้งหมด",
+      "loading": "กำลังโหลด...",
+      "noResources": "ไม่มีทรัพยากรที่พร้อมใช้งาน",
+      "spots": "{count} ที่นั่ง"
+    },
+    "detail": {
+      "loading": "กำลังโหลด...",
+      "notFound": "ไม่พบทรัพยากร",
+      "bookNow": "จองเลย",
+      "availability": "ความพร้อมใช้งาน",
+      "selectDate": "เลือกวันที่:",
+      "available": "{count} ว่าง",
+      "noSlots": "ไม่มีช่วงเวลาว่างสำหรับวันที่นี้",
+      "pickDate": "เลือกวันที่เพื่อดูช่วงเวลาว่าง",
+      "requiredFields": "ข้อมูลการจองที่จำเป็น",
+      "required": "จำเป็น",
+      "backToCatalogue": "กลับไปที่แคตตาล็อก"
+    },
+    "form": {
+      "bookTitle": "จอง: {name}",
+      "loading": "กำลังโหลด...",
+      "notFound": "ไม่พบทรัพยากร",
+      "selectDate": "เลือกวันที่",
+      "selectTime": "เลือกเวลา",
+      "checkIn": "วันเช็คอิน",
+      "checkOut": "วันเช็คเอาท์",
+      "available": "{count} ว่าง",
+      "noSlots": "ไม่มีช่วงเวลาว่างสำหรับวันที่นี้",
+      "additionalInfo": "ข้อมูลเพิ่มเติม",
+      "notes": "หมายเหตุ (ไม่บังคับ)",
+      "notesPlaceholder": "คำขอพิเศษ...",
+      "confirmBooking": "ยืนยันการจอง",
+      "booking": "กำลังจอง...",
+      "cancel": "ยกเลิก",
+      "bookingFailed": "การจองล้มเหลว กรุณาลองอีกครั้ง"
+    },
+    "myBookings": {
+      "title": "การจองของฉัน",
+      "loading": "กำลังโหลด...",
+      "noBookings": "คุณยังไม่มีการจอง",
+      "unknown": "ไม่ทราบ",
+      "view": "ดู",
+      "table": {
+        "resource": "ทรัพยากร",
+        "date": "วันที่",
+        "status": "สถานะ",
+        "actions": "การดำเนินการ"
+      }
+    }
+  }
+}

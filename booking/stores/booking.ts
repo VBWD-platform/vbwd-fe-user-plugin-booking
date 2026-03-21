@@ -23,6 +23,7 @@ export interface BookableResource {
   availability: Record<string, unknown>;
   custom_fields_schema: Array<{ id: string; label: string; type: string; required: boolean }> | null;
   image_url: string | null;
+  images: Array<{ id: string; url?: string; alt?: string; is_primary: boolean; sort_order: number }>;
   categories: Array<{ id: string; name: string; slug: string }>;
 }
 

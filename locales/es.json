@@ -1,0 +1,58 @@
+{
+  "booking": {
+    "catalogue": {
+      "title": "Reservas",
+      "search": "Buscar recursos...",
+      "switchToList": "Cambiar a lista",
+      "switchToGrid": "Cambiar a cuadrícula",
+      "all": "Todos",
+      "loading": "Cargando...",
+      "noResources": "No hay recursos disponibles.",
+      "spots": "{count} plazas"
+    },
+    "detail": {
+      "loading": "Cargando...",
+      "notFound": "Recurso no encontrado",
+      "bookNow": "Reservar ahora",
+      "availability": "Disponibilidad",
+      "selectDate": "Seleccionar fecha:",
+      "available": "{count} disponibles",
+      "noSlots": "No hay horarios disponibles para esta fecha.",
+      "pickDate": "Seleccione una fecha para ver los horarios disponibles.",
+      "requiredFields": "Información de reserva requerida",
+      "required": "obligatorio",
+      "backToCatalogue": "Volver al catálogo"
+    },
+    "form": {
+      "bookTitle": "Reservar: {name}",
+      "loading": "Cargando...",
+      "notFound": "Recurso no encontrado",
+      "selectDate": "Seleccionar fecha",
+      "selectTime": "Seleccionar hora",
+      "checkIn": "Fecha de entrada",
+      "checkOut": "Fecha de salida",
+      "available": "{count} disponibles",
+      "noSlots": "No hay horarios disponibles para esta fecha.",
+      "additionalInfo": "Información adicional",
+      "notes": "Notas (opcional)",
+      "notesPlaceholder": "Solicitudes especiales...",
+      "confirmBooking": "Confirmar reserva",
+      "booking": "Reservando...",
+      "cancel": "Cancelar",
+      "bookingFailed": "La reserva ha fallado. Por favor, inténtelo de nuevo."
+    },
+    "myBookings": {
+      "title": "Mis reservas",
+      "loading": "Cargando...",
+      "noBookings": "Aún no tienes reservas.",
+      "unknown": "Desconocido",
+      "view": "Ver",
+      "table": {
+        "resource": "Recurso",
+        "date": "Fecha",
+        "status": "Estado",
+        "actions": "Acciones"
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "booking": {
+    "catalogue": {
+      "title": "Buchung",
+      "search": "Ressourcen suchen...",
+      "switchToList": "Zur Listenansicht wechseln",
+      "switchToGrid": "Zur Rasteransicht wechseln",
+      "all": "Alle",
+      "loading": "Laden...",
+      "noResources": "Keine Ressourcen verfügbar.",
+      "spots": "{count} Plätze"
+    },
+    "detail": {
+      "loading": "Laden...",
+      "notFound": "Ressource nicht gefunden",
+      "bookNow": "Jetzt buchen",
+      "availability": "Verfügbarkeit",
+      "selectDate": "Datum auswählen:",
+      "available": "{count} verfügbar",
+      "noSlots": "Keine Zeitfenster für dieses Datum verfügbar.",
+      "pickDate": "Wählen Sie ein Datum, um verfügbare Zeitfenster zu sehen.",
+      "requiredFields": "Erforderliche Buchungsinformationen",
+      "required": "erforderlich",
+      "backToCatalogue": "Zurück zum Katalog"
+    },
+    "form": {
+      "bookTitle": "Buchen: {name}",
+      "loading": "Laden...",
+      "notFound": "Ressource nicht gefunden",
+      "selectDate": "Datum auswählen",
+      "selectTime": "Zeit auswählen",
+      "checkIn": "Check-in-Datum",
+      "checkOut": "Check-out-Datum",
+      "available": "{count} verfügbar",
+      "noSlots": "Keine Zeitfenster für dieses Datum verfügbar.",
+      "additionalInfo": "Zusätzliche Informationen",
+      "notes": "Notizen (optional)",
+      "notesPlaceholder": "Besondere Wünsche...",
+      "confirmBooking": "Buchung bestätigen",
+      "booking": "Buche...",
+      "cancel": "Abbrechen",
+      "bookingFailed": "Buchung fehlgeschlagen. Bitte versuchen Sie es erneut."
+    },
+    "myBookings": {
+      "title": "Meine Buchungen",
+      "loading": "Laden...",
+      "noBookings": "Sie haben noch keine Buchungen.",
+      "unknown": "Unbekannt",
+      "view": "Anzeigen",
+      "table": {
+        "resource": "Ressource",
+        "date": "Datum",
+        "status": "Status",
+        "actions": "Aktionen"
+      }
+    }
+  }
+}

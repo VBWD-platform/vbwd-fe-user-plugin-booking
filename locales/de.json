@@ -53,6 +53,34 @@
         "status": "Status",
         "actions": "Aktionen"
       }
+    },
+    "checkout": {
+      "title": "Buchungsbestätigung & Zahlung",
+      "dateTime": "Datum & Uhrzeit",
+      "quantity": "Anzahl",
+      "notes": "Hinweise",
+      "total": "Gesamt",
+      "termsLabel": "Ich stimme den AGB zu und bestätige diese Buchung",
+      "payNow": "Jetzt bezahlen",
+      "processing": "Verarbeitung...",
+      "bookingNotFound": "Buchung nicht gefunden.",
+      "orderSummary": "Bestellübersicht",
+      "requirementsTitle": "Bevor Sie bezahlen können:"
+    },
+    "confirmation": {
+      "titleConfirmed": "Buchung bestätigt!",
+      "titlePending": "Buchung eingegangen",
+      "titleDefault": "Buchungsstatus",
+      "messageConfirmed": "Ihre Buchung wurde bestätigt und die Zahlung erfolgreich verarbeitet.",
+      "messagePending": "Ihre Zahlung wird verarbeitet. Dies kann einen Moment dauern.",
+      "messageDefault": "Ihre Buchung wurde empfangen.",
+      "bookingDetails": "Buchungs- & Zahlungsdetails",
+      "bookingId": "Buchungs-ID",
+      "invoiceId": "Rechnungs-ID",
+      "paymentStatus": "Zahlungsstatus",
+      "resourceDetails": "Ressourcendetails",
+      "bookingInfo": "Buchungsinformationen",
+      "viewMyBookings": "Meine Buchungen anzeigen"
     }
   }
 }

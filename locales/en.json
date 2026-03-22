@@ -41,6 +41,34 @@
       "cancel": "Cancel",
       "bookingFailed": "Booking failed. Please try again."
     },
+    "confirmation": {
+      "titleConfirmed": "Booking Confirmed!",
+      "titlePending": "Booking Received",
+      "titleDefault": "Booking Status",
+      "messageConfirmed": "Your booking has been confirmed and payment processed successfully.",
+      "messagePending": "Your payment is being processed. This may take a moment.",
+      "messageDefault": "Your booking has been received.",
+      "bookingDetails": "Booking & Payment Details",
+      "bookingId": "Booking ID",
+      "invoiceId": "Invoice ID",
+      "paymentStatus": "Payment Status",
+      "resourceDetails": "Resource Details",
+      "bookingInfo": "Booking Information",
+      "viewMyBookings": "View My Bookings"
+    },
+    "checkout": {
+      "title": "Booking Confirmation & Payment",
+      "orderSummary": "Order Summary",
+      "dateTime": "Date & Time",
+      "quantity": "Quantity",
+      "notes": "Notes",
+      "total": "Total",
+      "termsLabel": "I agree to the terms and conditions and confirm this booking",
+      "requirementsTitle": "Before you can pay:",
+      "payNow": "Pay Now",
+      "processing": "Processing...",
+      "bookingNotFound": "Booking not found."
+    },
     "myBookings": {
       "title": "My Bookings",
       "loading": "Loading...",

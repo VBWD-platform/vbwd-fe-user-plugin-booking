@@ -283,15 +283,11 @@ async function handleSubmit() {
       notes: notes.value || undefined,
     });
 
-    // Redirect to checkout with the invoice, or to confirmation
-    if (booking.invoice_id) {
-      router.push({
-        path: '/checkout',
-        query: { invoice_id: booking.invoice_id },
-      });
-    } else {
-      router.push(`/dashboard/bookings`);
-    }
+    // Redirect to booking's own checkout page with full details
+    router.push({
+      path: `/booking/${resourceSlug.value}/book/pay`,
+      query: { booking_id: booking.id },
+    });
   } catch (error) {
     errorMessage.value = error instanceof Error ? error.message : 'Booking failed. Please try again.';
   } finally {

@@ -23,6 +23,17 @@ export const bookingPlugin: IPlugin = {
     sdk.addTranslations('th', th);
     sdk.addTranslations('zh', zh);
 
+    // Register booking confirmation details into checkout confirmation page
+    import('../checkout/checkoutConfirmationRegistry')
+      .then(({ checkoutConfirmationRegistry }) => {
+        import('./booking/components/BookingConfirmationDetails.vue').then((module) => {
+          checkoutConfirmationRegistry.register('booking', module.default);
+        });
+      })
+      .catch(() => {
+        // Checkout plugin not installed — skip
+      });
+
     // Register CMS vue-component widgets
     import('../cms/src/registry/vueComponentRegistry')
       .then(({ registerCmsVueComponent }) => {
@@ -61,6 +72,14 @@ export const bookingPlugin: IPlugin = {
       name: 'booking-form',
       component: () => import('./booking/views/BookingForm.vue'),
       meta: { requiresAuth: false, cmsLayout: true },
+    });
+
+    // Booking payment page (standalone, no dashboard layout — same as checkout plugin)
+    sdk.addRoute({
+      path: '/booking/:slug/book/pay',
+      name: 'booking-checkout',
+      component: () => import('./booking/views/BookingCheckout.vue'),
+      meta: { requiresAuth: false, noLayout: true },
     });
 
     // Dashboard routes (auth required)

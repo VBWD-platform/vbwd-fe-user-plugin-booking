@@ -53,6 +53,34 @@
         "status": "Statut",
         "actions": "Actions"
       }
+    },
+    "checkout": {
+      "title": "Confirmation et paiement",
+      "dateTime": "Date et heure",
+      "quantity": "Quantité",
+      "notes": "Notes",
+      "total": "Total",
+      "termsLabel": "J'accepte les conditions générales et confirme cette réservation",
+      "payNow": "Payer maintenant",
+      "processing": "Traitement...",
+      "bookingNotFound": "Réservation introuvable.",
+      "orderSummary": "Résumé de la commande",
+      "requirementsTitle": "Avant de pouvoir payer :"
+    },
+    "confirmation": {
+      "titleConfirmed": "Réservation confirmée !",
+      "titlePending": "Réservation reçue",
+      "titleDefault": "Statut de la réservation",
+      "messageConfirmed": "Votre réservation est confirmée et le paiement a été traité.",
+      "messagePending": "Votre paiement est en cours de traitement.",
+      "messageDefault": "Votre réservation a été reçue.",
+      "bookingDetails": "Détails de réservation et paiement",
+      "bookingId": "ID de réservation",
+      "invoiceId": "ID de facture",
+      "paymentStatus": "Statut du paiement",
+      "resourceDetails": "Détails de la ressource",
+      "bookingInfo": "Informations de réservation",
+      "viewMyBookings": "Voir mes réservations"
     }
   }
 }

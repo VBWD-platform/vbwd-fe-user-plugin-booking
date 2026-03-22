@@ -53,6 +53,34 @@
         "status": "状态",
         "actions": "操作"
       }
+    },
+    "checkout": {
+      "title": "预订确认与付款",
+      "dateTime": "日期与时间",
+      "quantity": "数量",
+      "notes": "备注",
+      "total": "合计",
+      "termsLabel": "我同意条款与条件并确认此预订",
+      "payNow": "立即支付",
+      "processing": "处理中...",
+      "bookingNotFound": "未找到预订。",
+      "orderSummary": "订单摘要",
+      "requirementsTitle": "付款前请完成："
+    },
+    "confirmation": {
+      "titleConfirmed": "预订已确认！",
+      "titlePending": "预订已收到",
+      "titleDefault": "预订状态",
+      "messageConfirmed": "您的预订已确认，付款已成功处理。",
+      "messagePending": "您的付款正在处理中，请稍候。",
+      "messageDefault": "您的预订已收到。",
+      "bookingDetails": "预订与付款详情",
+      "bookingId": "预订编号",
+      "invoiceId": "发票编号",
+      "paymentStatus": "付款状态",
+      "resourceDetails": "资源详情",
+      "bookingInfo": "预订信息",
+      "viewMyBookings": "查看我的预订"
     }
   }
 }

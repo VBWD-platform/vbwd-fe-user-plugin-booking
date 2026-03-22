@@ -53,6 +53,34 @@
         "status": "สถานะ",
         "actions": "การดำเนินการ"
       }
+    },
+    "checkout": {
+      "title": "ยืนยันการจองและชำระเงิน",
+      "dateTime": "วันที่และเวลา",
+      "quantity": "จำนวน",
+      "notes": "หมายเหตุ",
+      "total": "รวม",
+      "termsLabel": "ฉันยอมรับข้อกำหนดและเงื่อนไขและยืนยันการจองนี้",
+      "payNow": "ชำระเงินตอนนี้",
+      "processing": "กำลังดำเนินการ...",
+      "bookingNotFound": "ไม่พบการจอง",
+      "orderSummary": "สรุปคำสั่งซื้อ",
+      "requirementsTitle": "ก่อนชำระเงิน:"
+    },
+    "confirmation": {
+      "titleConfirmed": "ยืนยันการจองแล้ว!",
+      "titlePending": "ได้รับการจองแล้ว",
+      "titleDefault": "สถานะการจอง",
+      "messageConfirmed": "การจองของคุณได้รับการยืนยันและชำระเงินเรียบร้อยแล้ว",
+      "messagePending": "กำลังดำเนินการชำระเงิน กรุณารอสักครู่",
+      "messageDefault": "ได้รับการจองของคุณแล้ว",
+      "bookingDetails": "รายละเอียดการจองและการชำระเงิน",
+      "bookingId": "รหัสการจอง",
+      "invoiceId": "รหัสใบแจ้งหนี้",
+      "paymentStatus": "สถานะการชำระเงิน",
+      "resourceDetails": "รายละเอียดทรัพยากร",
+      "bookingInfo": "ข้อมูลการจอง",
+      "viewMyBookings": "ดูการจองของฉัน"
     }
   }
 }

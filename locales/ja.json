@@ -53,6 +53,34 @@
         "status": "ステータス",
         "actions": "操作"
       }
+    },
+    "checkout": {
+      "title": "予約確認・お支払い",
+      "dateTime": "日時",
+      "quantity": "数量",
+      "notes": "備考",
+      "total": "合計",
+      "termsLabel": "利用規約に同意し、この予約を確認します",
+      "payNow": "今すぐ支払う",
+      "processing": "処理中...",
+      "bookingNotFound": "予約が見つかりません。",
+      "orderSummary": "注文概要",
+      "requirementsTitle": "お支払い前に："
+    },
+    "confirmation": {
+      "titleConfirmed": "予約確認済み！",
+      "titlePending": "予約を受け付けました",
+      "titleDefault": "予約状況",
+      "messageConfirmed": "予約が確認され、お支払いが正常に処理されました。",
+      "messagePending": "お支払いを処理中です。しばらくお待ちください。",
+      "messageDefault": "予約を受け付けました。",
+      "bookingDetails": "予約・お支払い詳細",
+      "bookingId": "予約ID",
+      "invoiceId": "請求書ID",
+      "paymentStatus": "お支払い状況",
+      "resourceDetails": "リソース詳細",
+      "bookingInfo": "予約情報",
+      "viewMyBookings": "予約一覧を見る"
     }
   }
 }

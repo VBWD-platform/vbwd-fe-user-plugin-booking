@@ -53,6 +53,34 @@
         "status": "Статус",
         "actions": "Действия"
       }
+    },
+    "checkout": {
+      "title": "Подтверждение и оплата",
+      "dateTime": "Дата и время",
+      "quantity": "Количество",
+      "notes": "Примечания",
+      "total": "Итого",
+      "termsLabel": "Я принимаю условия и подтверждаю бронирование",
+      "payNow": "Оплатить",
+      "processing": "Обработка...",
+      "bookingNotFound": "Бронирование не найдено.",
+      "orderSummary": "Сводка заказа",
+      "requirementsTitle": "Перед оплатой:"
+    },
+    "confirmation": {
+      "titleConfirmed": "Бронирование подтверждено!",
+      "titlePending": "Бронирование получено",
+      "titleDefault": "Статус бронирования",
+      "messageConfirmed": "Ваше бронирование подтверждено, оплата успешно обработана.",
+      "messagePending": "Ваш платёж обрабатывается. Это может занять некоторое время.",
+      "messageDefault": "Ваше бронирование получено.",
+      "bookingDetails": "Детали бронирования и оплаты",
+      "bookingId": "ID бронирования",
+      "invoiceId": "ID счёта",
+      "paymentStatus": "Статус оплаты",
+      "resourceDetails": "Детали ресурса",
+      "bookingInfo": "Информация о бронировании",
+      "viewMyBookings": "Мои бронирования"
     }
   }
 }

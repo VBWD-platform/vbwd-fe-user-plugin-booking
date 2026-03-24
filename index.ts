@@ -1,4 +1,5 @@
 import type { IPlugin, IPlatformSDK } from 'vbwd-view-component';
+import { bookingConfig } from './booking/bookingConfig';
 import en from './locales/en.json';
 import de from './locales/de.json';
 import es from './locales/es.json';
@@ -40,9 +41,15 @@ export const bookingPlugin: IPlugin = {
         Promise.all([
           import('./booking/views/BookingCatalogue.vue'),
           import('./booking/views/BookingResourceDetail.vue'),
-        ]).then(([catalogue, detail]) => {
+          import('./booking/views/BookingForm.vue'),
+          import('./booking/views/BookingSuccess.vue'),
+          import('./booking/views/BookingCancel.vue'),
+        ]).then(([catalogue, detail, form, success, cancel]) => {
           registerCmsVueComponent('BookingCatalogue', catalogue.default);
           registerCmsVueComponent('BookingResourceDetail', detail.default);
+          registerCmsVueComponent('BookingForm', form.default);
+          registerCmsVueComponent('BookingSuccess', success.default);
+          registerCmsVueComponent('BookingCancel', cancel.default);
         });
       })
       .catch(() => {
@@ -66,11 +73,13 @@ export const bookingPlugin: IPlugin = {
       meta: { requiresAuth: false, cmsLayout: true },
     });
 
-    // Booking form (public page with CMS layout — auth checked on submit)
+    // Booking form — CMS page with configurable slug
+    const formSlug = bookingConfig.bookingFormSlug;
     sdk.addRoute({
-      path: '/booking/:slug/book',
+      path: `/${formSlug}/:slug`,
       name: 'booking-form',
-      component: () => import('./booking/views/BookingForm.vue'),
+      component: () => import('../cms/src/views/CmsPage.vue'),
+      props: { slug: formSlug },
       meta: { requiresAuth: false, cmsLayout: true },
     });
 
@@ -80,6 +89,24 @@ export const bookingPlugin: IPlugin = {
       name: 'booking-checkout',
       component: () => import('./booking/views/BookingCheckout.vue'),
       meta: { requiresAuth: false, noLayout: true },
+    });
+
+    // Booking success page — CMS page with invoice details
+    sdk.addRoute({
+      path: '/booking/success',
+      name: 'booking-success',
+      component: () => import('../cms/src/views/CmsPage.vue'),
+      props: { slug: 'booking-success' },
+      meta: { requiresAuth: true, cmsLayout: true },
+    });
+
+    // Booking cancel page — CMS page shown when payment is cancelled
+    sdk.addRoute({
+      path: '/booking/cancel',
+      name: 'booking-cancel',
+      component: () => import('../cms/src/views/CmsPage.vue'),
+      props: { slug: 'booking-cancel' },
+      meta: { requiresAuth: false, cmsLayout: true },
     });
 
     // Dashboard routes (auth required)

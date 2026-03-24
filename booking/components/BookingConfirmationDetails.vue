@@ -57,6 +57,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { api } from '@/api';
 
 const props = defineProps<{
@@ -64,6 +65,7 @@ const props = defineProps<{
   invoiceData: Record<string, unknown> | null;
 }>();
 
+const router = useRouter();
 const bookingData = ref<Record<string, unknown> | null>(null);
 const resource = ref<Record<string, unknown> | null>(null);
 
@@ -82,6 +84,10 @@ onMounted(async () => {
   });
 
   if (!bookingLineItem) return;
+
+  // Redirect to dedicated booking success page
+  router.replace({ path: '/booking/success', query: { invoice_id: props.invoiceId } });
+  return;
 
   const extraData = bookingLineItem.extra_data as Record<string, unknown>;
   const bookingId = extraData.booking_id as string;

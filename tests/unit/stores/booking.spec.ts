@@ -81,21 +81,22 @@ describe('useBookingStore', () => {
     expect(store.availableSlots[0].start).toBe('09:00');
   });
 
-  it('createBooking calls API and returns booking', async () => {
-    const mockBooking = { id: 'booking-1', status: 'pending', resource_slug: 'dr-smith' };
-    vi.mocked(api.post).mockResolvedValue(mockBooking);
+  it('checkout calls checkout API and returns invoice', async () => {
+    const mockResult = { invoice_id: 'inv-1', invoice_number: 'BK-ABCD1234' };
+    vi.mocked(api.post).mockResolvedValue(mockResult);
 
     const store = useBookingStore();
-    const result = await store.createBooking({
+    const result = await store.checkout({
       resource_slug: 'dr-smith',
       start_at: '2026-03-20T10:00:00',
       end_at: '2026-03-20T10:30:00',
     });
 
-    expect(api.post).toHaveBeenCalledWith('/booking/bookings', expect.objectContaining({
+    expect(api.post).toHaveBeenCalledWith('/booking/checkout', expect.objectContaining({
       resource_slug: 'dr-smith',
     }));
-    expect(result.id).toBe('booking-1');
+    expect(result.invoice_id).toBe('inv-1');
+    expect(result.invoice_number).toBe('BK-ABCD1234');
   });
 
   it('fetchUserBookings populates userBookings', async () => {

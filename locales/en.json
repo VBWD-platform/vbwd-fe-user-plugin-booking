@@ -69,6 +69,27 @@
       "processing": "Processing...",
       "bookingNotFound": "Booking not found."
     },
+    "success": {
+      "verifying": "Verifying payment...",
+      "titlePaid": "Booking Confirmed!",
+      "titleAuthorized": "Payment Authorized",
+      "titlePending": "Payment Processing",
+      "messagePaid": "Your payment has been received and your booking is confirmed. Thank you!",
+      "messagePending": "Your payment is being processed. Your booking will be confirmed shortly.",
+      "invoiceDetails": "Invoice Details",
+      "invoiceNumber": "Invoice Number",
+      "status": "Status",
+      "amount": "Amount",
+      "paidAt": "Paid At",
+      "bookingDetails": "Booking Details",
+      "viewBookings": "View My Bookings"
+    },
+    "cancel": {
+      "title": "Payment Cancelled",
+      "message": "Your payment was cancelled. Your booking has not been confirmed.",
+      "browseCatalogue": "Browse Resources",
+      "tryAgain": "Try Again"
+    },
     "myBookings": {
       "title": "My Bookings",
       "loading": "Loading...",

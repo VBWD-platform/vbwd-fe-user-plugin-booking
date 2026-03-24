@@ -1,0 +1,17 @@
+{
+  "tabs": [
+    {
+      "id": "general",
+      "label": "General",
+      "fields": [
+        {
+          "key": "booking_form_slug",
+          "label": "Booking Form Page Slug",
+          "component": "input",
+          "inputType": "text",
+          "description": "CMS page slug for the booking form (used by Book Now button)"
+        }
+      ]
+    }
+  ]
+}

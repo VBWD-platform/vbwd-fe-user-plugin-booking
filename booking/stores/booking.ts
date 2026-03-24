@@ -58,6 +58,16 @@ export const useBookingStore = defineStore('booking', () => {
   const currentBooking = ref<Booking | null>(null);
   const loading = ref(false);
 
+  /** Holds form data between BookingForm → BookingCheckout (no API call yet). */
+  const pendingCheckout = ref<{
+    resource_slug: string;
+    start_at: string;
+    end_at: string;
+    quantity?: number;
+    custom_fields?: Record<string, unknown>;
+    notes?: string;
+  } | null>(null);
+
   async function fetchCategories() {
     const response = await api.get('/booking/categories') as { categories: ResourceCategory[] };
     categories.value = response.categories;
@@ -93,16 +103,15 @@ export const useBookingStore = defineStore('booking', () => {
     availableSlots.value = response.slots;
   }
 
-  async function createBooking(data: {
+  async function checkout(data: {
     resource_slug: string;
     start_at: string;
     end_at: string;
     quantity?: number;
     custom_fields?: Record<string, unknown>;
     notes?: string;
-  }): Promise<Booking> {
-    const response = await api.post('/booking/bookings', data) as Booking;
-    return response;
+  }): Promise<{ invoice_id: string; invoice_number: string }> {
+    return await api.post('/booking/checkout', data) as { invoice_id: string; invoice_number: string };
   }
 
   async function fetchUserBookings() {
@@ -137,12 +146,13 @@ export const useBookingStore = defineStore('booking', () => {
     availableSlots,
     userBookings,
     currentBooking,
+    pendingCheckout,
     loading,
     fetchCategories,
     fetchResources,
     fetchResourceBySlug,
     fetchAvailability,
-    createBooking,
+    checkout,
     fetchUserBookings,
     fetchBookingDetail,
     cancelBooking,

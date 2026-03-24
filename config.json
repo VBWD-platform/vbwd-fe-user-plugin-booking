@@ -2,6 +2,7 @@
   "booking": {
     "catalogue_route": "/booking",
     "dashboard_route": "/dashboard/bookings",
-    "cms_widget": "BookingCatalogue"
+    "cms_widget": "BookingCatalogue",
+    "booking_form_slug": "booking-form"
   }
 }

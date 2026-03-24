@@ -152,9 +152,10 @@ const selectedPaymentMethod = ref<string | null>(null);
 const termsAccepted = ref(false);
 const billingAddressValid = ref(false);
 
-// Data
-const bookingData = computed(() => store.currentBooking);
+// Data — from pendingCheckout (set by BookingForm)
+const bookingData = computed(() => store.pendingCheckout);
 const resource = computed(() => store.currentResource);
+const invoiceId = ref<string | null>(null);
 
 const canPay = computed(() =>
   isAuthenticated.value &&
@@ -203,17 +204,20 @@ async function handlePay() {
   paying.value = true;
   errorMessage.value = '';
   try {
-    const invoiceId = bookingData.value.invoice_id;
-    if (invoiceId && selectedPaymentMethod.value) {
+    // Create invoice via checkout API (user is authenticated at this point)
+    if (!invoiceId.value) {
+      const result = await store.checkout(bookingData.value);
+      invoiceId.value = result.invoice_id;
+    }
+
+    if (invoiceId.value && selectedPaymentMethod.value) {
       router.push({
         path: `/pay/${selectedPaymentMethod.value}`,
-        query: { invoice: invoiceId },
+        query: { invoice: invoiceId.value },
       });
-    } else {
-      router.push('/dashboard/bookings');
     }
   } catch (error) {
-    errorMessage.value = error instanceof Error ? error.message : 'Payment failed';
+    errorMessage.value = error instanceof Error ? error.message : 'Checkout failed';
   } finally {
     paying.value = false;
   }
@@ -221,16 +225,11 @@ async function handlePay() {
 
 onMounted(async () => {
   try {
-    const bookingId = route.query.booking_id as string;
-    if (!bookingId) {
+    if (!store.pendingCheckout) {
       loading.value = false;
       return;
     }
-    await store.fetchBookingDetail(bookingId);
-    if (store.currentBooking) {
-      const resourceSlug = route.params.slug as string;
-      await store.fetchResourceBySlug(resourceSlug);
-    }
+    await store.fetchResourceBySlug(store.pendingCheckout.resource_slug);
   } finally {
     loading.value = false;
   }

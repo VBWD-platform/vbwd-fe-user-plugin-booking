@@ -1,9 +1,15 @@
 <template>
   <div class="ghrm-detail">
-    <div v-if="store.loading" class="ghrm-loading">
+    <div
+      v-if="store.loading"
+      class="ghrm-loading"
+    >
       {{ $t('booking.form.loading') }}
     </div>
-    <div v-else-if="!resource" class="ghrm-error">
+    <div
+      v-else-if="!resource"
+      class="ghrm-error"
+    >
       {{ $t('booking.form.notFound') }}
     </div>
 
@@ -16,7 +22,9 @@
           class="ghrm-detail-icon"
         >
         <div class="ghrm-detail-meta">
-          <h1 class="ghrm-detail-name">{{ $t('booking.form.bookTitle', { name: resource.name }) }}</h1>
+          <h1 class="ghrm-detail-name">
+            {{ $t('booking.form.bookTitle', { name: resource.name }) }}
+          </h1>
           <p class="ghrm-detail-author">
             {{ resource.resource_type }} · {{ resource.price }} {{ resource.currency }} / {{ resource.price_unit.replace('per_', '') }}
           </p>
@@ -31,13 +39,18 @@
         </div>
       </div>
 
-      <form class="booking-form" @submit.prevent="handleSubmit">
+      <form
+        class="booking-form"
+        @submit.prevent="handleSubmit"
+      >
         <!-- Custom fields -->
         <div
           v-if="resource.custom_fields_schema && resource.custom_fields_schema.length"
           class="booking-form__section"
         >
-          <h3 class="ghrm-section-label">{{ $t('booking.form.additionalInfo') }}</h3>
+          <h3 class="ghrm-section-label">
+            {{ $t('booking.form.additionalInfo') }}
+          </h3>
           <div
             v-for="field in resource.custom_fields_schema"
             :key="field.id"
@@ -45,7 +58,10 @@
           >
             <label :for="`field-${field.id}`">
               {{ field.label }}
-              <span v-if="field.required" class="booking-form__required">*</span>
+              <span
+                v-if="field.required"
+                class="booking-form__required"
+              >*</span>
             </label>
             <input
               v-if="field.type === 'string' || field.type === 'text'"
@@ -67,7 +83,11 @@
               v-else-if="field.type === 'boolean'"
               class="booking-form__checkbox"
             >
-              <input :id="`field-${field.id}`" v-model="customFields[field.id]" type="checkbox" >
+              <input
+                :id="`field-${field.id}`"
+                v-model="customFields[field.id]"
+                type="checkbox"
+              >
               {{ field.label }}
             </label>
           </div>
@@ -75,7 +95,9 @@
 
         <!-- Notes -->
         <div class="booking-form__section">
-          <h3 class="ghrm-section-label">{{ $t('booking.form.notes') }}</h3>
+          <h3 class="ghrm-section-label">
+            {{ $t('booking.form.notes') }}
+          </h3>
           <textarea
             v-model="notes"
             class="booking-form__input"
@@ -86,10 +108,17 @@
 
         <!-- Submit -->
         <div class="booking-form__actions">
-          <button type="submit" class="ghrm-cta-btn">
+          <button
+            type="submit"
+            class="ghrm-cta-btn"
+          >
             {{ $t('booking.form.confirmBooking') }}
           </button>
-          <a href="#" class="booking-back-link" @click.prevent="router.back()">
+          <a
+            href="#"
+            class="booking-back-link"
+            @click.prevent="router.back()"
+          >
             {{ $t('booking.form.cancel') }}
           </a>
         </div>

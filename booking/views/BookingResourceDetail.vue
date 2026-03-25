@@ -1,19 +1,35 @@
 <template>
   <div class="ghrm-detail">
-    <div v-if="store.loading" class="ghrm-loading">
+    <div
+      v-if="store.loading"
+      class="ghrm-loading"
+    >
       {{ $t('booking.detail.loading') }}
     </div>
-    <div v-else-if="!resource" class="ghrm-error">
+    <div
+      v-else-if="!resource"
+      class="ghrm-error"
+    >
       {{ $t('booking.detail.notFound') }}
     </div>
 
     <template v-else>
       <!-- Image Gallery -->
-      <div v-if="resource.images && resource.images.length" class="booking-gallery">
+      <div
+        v-if="resource.images && resource.images.length"
+        class="booking-gallery"
+      >
         <div class="booking-gallery__main">
-          <img :src="activeImageUrl" :alt="resource.name" class="booking-gallery__main-img" >
+          <img
+            :src="activeImageUrl"
+            :alt="resource.name"
+            class="booking-gallery__main-img"
+          >
         </div>
-        <div v-if="resource.images.length > 1" class="booking-gallery__thumbs">
+        <div
+          v-if="resource.images.length > 1"
+          class="booking-gallery__thumbs"
+        >
           <button
             v-for="image in resource.images"
             :key="image.id"
@@ -21,7 +37,10 @@
             :class="{ active: activeImageUrl === image.url }"
             @click="activeImageUrl = image.url"
           >
-            <img :src="image.url" :alt="image.alt || ''" >
+            <img
+              :src="image.url"
+              :alt="image.alt || ''"
+            >
           </button>
         </div>
       </div>
@@ -35,16 +54,27 @@
           class="ghrm-detail-icon"
         >
         <div class="ghrm-detail-meta">
-          <h1 class="ghrm-detail-name">{{ resource.name }}</h1>
-          <p class="ghrm-detail-author">{{ resource.resource_type }}</p>
+          <h1 class="ghrm-detail-name">
+            {{ resource.name }}
+          </h1>
+          <p class="ghrm-detail-author">
+            {{ resource.resource_type }}
+          </p>
           <div class="ghrm-detail-badges">
             <span class="ghrm-badge ghrm-badge--version">
               {{ resource.price }} {{ resource.currency }} / {{ resource.price_unit.replace('per_', '') }}
             </span>
-            <span v-if="resource.capacity > 1" class="ghrm-badge ghrm-badge--downloads">
+            <span
+              v-if="resource.capacity > 1"
+              class="ghrm-badge ghrm-badge--downloads"
+            >
               {{ $t('booking.catalogue.spots', { count: resource.capacity }) }}
             </span>
-            <span v-for="category in resource.categories" :key="category.id" class="ghrm-badge ghrm-badge--downloads">
+            <span
+              v-for="category in resource.categories"
+              :key="category.id"
+              class="ghrm-badge ghrm-badge--downloads"
+            >
               {{ category.name }}
             </span>
           </div>
@@ -52,32 +82,53 @@
       </div>
 
       <!-- Description -->
-      <p v-if="resource.description" class="ghrm-detail-description">
+      <p
+        v-if="resource.description"
+        class="ghrm-detail-description"
+      >
         {{ resource.description }}
       </p>
 
       <!-- Availability section — pick date + slot, then Book Now -->
       <div class="ghrm-features">
-        <h3 class="ghrm-section-label">{{ $t('booking.detail.availability') }}</h3>
+        <h3 class="ghrm-section-label">
+          {{ $t('booking.detail.availability') }}
+        </h3>
 
         <!-- Date picker (fixed slots) or date range (flexible) -->
         <template v-if="isFlexibleDuration">
           <div class="booking-date-picker">
             <label>{{ $t('booking.form.checkIn') }}</label>
-            <input v-model="selectedDate" type="date" :min="todayString" >
+            <input
+              v-model="selectedDate"
+              type="date"
+              :min="todayString"
+            >
           </div>
           <div class="booking-date-picker">
             <label>{{ $t('booking.form.checkOut') }}</label>
-            <input v-model="selectedEndDate" type="date" :min="selectedDate || todayString" >
+            <input
+              v-model="selectedEndDate"
+              type="date"
+              :min="selectedDate || todayString"
+            >
           </div>
         </template>
         <template v-else>
           <div class="booking-date-picker">
             <label>{{ $t('booking.detail.selectDate') }}</label>
-            <input v-model="selectedDate" type="date" :min="todayString" @change="loadAvailability" >
+            <input
+              v-model="selectedDate"
+              type="date"
+              :min="todayString"
+              @change="loadAvailability"
+            >
           </div>
 
-          <div v-if="store.availableSlots.length" class="booking-slots-grid">
+          <div
+            v-if="store.availableSlots.length"
+            class="booking-slots-grid"
+          >
             <button
               v-for="(slot, index) in store.availableSlots"
               :key="index"
@@ -91,8 +142,18 @@
               <span class="booking-slot__capacity">{{ $t('booking.detail.available', { count: slot.available_capacity }) }}</span>
             </button>
           </div>
-          <p v-else-if="selectedDate" class="ghrm-muted">{{ $t('booking.detail.noSlots') }}</p>
-          <p v-else class="ghrm-muted">{{ $t('booking.detail.pickDate') }}</p>
+          <p
+            v-else-if="selectedDate"
+            class="ghrm-muted"
+          >
+            {{ $t('booking.detail.noSlots') }}
+          </p>
+          <p
+            v-else
+            class="ghrm-muted"
+          >
+            {{ $t('booking.detail.pickDate') }}
+          </p>
         </template>
       </div>
 
@@ -109,7 +170,10 @@
 
       <!-- Back link -->
       <div class="booking-back">
-        <router-link to="/booking" class="booking-back-link">
+        <router-link
+          to="/booking"
+          class="booking-back-link"
+        >
           ← {{ $t('booking.detail.backToCatalogue') }}
         </router-link>
       </div>

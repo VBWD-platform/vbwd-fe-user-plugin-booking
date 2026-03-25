@@ -11,11 +11,21 @@
         class="booking-resource-image"
       >
       <div class="booking-resource-info">
-        <router-link :to="`/booking/${resource.slug}`" class="booking-resource-name">
+        <router-link
+          :to="`/booking/${resource.slug}`"
+          class="booking-resource-name"
+        >
           {{ resource.name }}
         </router-link>
-        <p class="resource-type">{{ resource.resource_type }}</p>
-        <p v-if="resource.description" class="resource-desc">{{ resource.description }}</p>
+        <p class="resource-type">
+          {{ resource.resource_type }}
+        </p>
+        <p
+          v-if="resource.description"
+          class="resource-desc"
+        >
+          {{ resource.description }}
+        </p>
         <div class="resource-price-row">
           <span>{{ resource.price }} {{ resource.currency }} / {{ resource.price_unit.replace('per_', '') }}</span>
         </div>
@@ -28,15 +38,24 @@
         <span class="detail-label">{{ $t('booking.checkout.dateTime') }}</span>
         <span>{{ formatDateTime(bookingData.start_at) }} — {{ formatDateTime(bookingData.end_at) }}</span>
       </div>
-      <div v-if="bookingData.quantity > 1" class="detail-row">
+      <div
+        v-if="bookingData.quantity > 1"
+        class="detail-row"
+      >
         <span class="detail-label">{{ $t('booking.checkout.quantity') }}</span>
         <span>{{ bookingData.quantity }}</span>
       </div>
     </div>
 
     <!-- Custom fields -->
-    <div v-if="bookingData.custom_fields && Object.keys(bookingData.custom_fields).length" class="booking-details" style="margin-top: 16px;">
-      <h3 class="section-label">{{ $t('booking.confirmation.bookingInfo') }}</h3>
+    <div
+      v-if="bookingData.custom_fields && Object.keys(bookingData.custom_fields).length"
+      class="booking-details"
+      style="margin-top: 16px;"
+    >
+      <h3 class="section-label">
+        {{ $t('booking.confirmation.bookingInfo') }}
+      </h3>
       <div
         v-for="(value, key) in bookingData.custom_fields"
         :key="String(key)"
@@ -48,8 +67,13 @@
     </div>
 
     <!-- Notes -->
-    <div v-if="bookingData.notes" class="booking-notes">
-      <h3 class="section-label">{{ $t('booking.checkout.notes') }}</h3>
+    <div
+      v-if="bookingData.notes"
+      class="booking-notes"
+    >
+      <h3 class="section-label">
+        {{ $t('booking.checkout.notes') }}
+      </h3>
       <p>{{ bookingData.notes }}</p>
     </div>
   </div>

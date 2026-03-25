@@ -1,23 +1,37 @@
 <template>
   <div class="public-checkout">
-    <h1 data-testid="checkout-title">{{ $t('booking.checkout.title') }}</h1>
+    <h1 data-testid="checkout-title">
+      {{ $t('booking.checkout.title') }}
+    </h1>
 
     <!-- Loading -->
-    <div v-if="loading" class="loading-state">
+    <div
+      v-if="loading"
+      class="loading-state"
+    >
       <div class="spinner" />
       <p>{{ $t('booking.form.loading') }}</p>
     </div>
 
     <!-- Not found -->
-    <div v-else-if="!bookingData || !resource" class="error-state">
+    <div
+      v-else-if="!bookingData || !resource"
+      class="error-state"
+    >
       <p>{{ $t('booking.checkout.bookingNotFound') }}</p>
-      <router-link to="/booking" class="btn secondary">
+      <router-link
+        to="/booking"
+        class="btn secondary"
+      >
         {{ $t('booking.detail.backToCatalogue') }}
       </router-link>
     </div>
 
     <!-- Checkout Form -->
-    <div v-else class="checkout-content">
+    <div
+      v-else
+      class="checkout-content"
+    >
       <!-- Step 1: Email Block (login/register) -->
       <EmailBlock
         :initial-email="userEmail"
@@ -41,11 +55,23 @@
           >
           <div class="booking-resource-info">
             <div class="plan-row">
-              <router-link :to="`/booking/${resource.slug}`" class="booking-resource-name">{{ resource.name }}</router-link>
+              <router-link
+                :to="`/booking/${resource.slug}`"
+                class="booking-resource-name"
+              >
+                {{ resource.name }}
+              </router-link>
               <span class="booking-resource-price">{{ resource.price }} {{ resource.currency }}</span>
             </div>
-            <p class="plan-description">{{ resource.resource_type }}</p>
-            <p v-if="resource.description" class="plan-description">{{ resource.description }}</p>
+            <p class="plan-description">
+              {{ resource.resource_type }}
+            </p>
+            <p
+              v-if="resource.description"
+              class="plan-description"
+            >
+              {{ resource.description }}
+            </p>
           </div>
         </div>
 
@@ -55,11 +81,17 @@
             <span>{{ $t('booking.checkout.dateTime') }}</span>
             <span>{{ formatDateTime(bookingData.start_at) }} — {{ formatDateTime(bookingData.end_at) }}</span>
           </div>
-          <div v-if="bookingData.quantity > 1" class="booking-detail-row">
+          <div
+            v-if="bookingData.quantity > 1"
+            class="booking-detail-row"
+          >
             <span>{{ $t('booking.checkout.quantity') }}</span>
             <span>{{ bookingData.quantity }}</span>
           </div>
-          <div v-if="bookingData.notes" class="booking-detail-row">
+          <div
+            v-if="bookingData.notes"
+            class="booking-detail-row"
+          >
             <span>{{ $t('booking.checkout.notes') }}</span>
             <span>{{ bookingData.notes }}</span>
           </div>
@@ -96,16 +128,27 @@
       <TermsCheckbox @change="handleTermsChange" />
 
       <!-- Requirements Status -->
-      <div v-if="missingRequirements.length > 0" class="requirements">
+      <div
+        v-if="missingRequirements.length > 0"
+        class="requirements"
+      >
         <p><strong>{{ $t('booking.checkout.requirementsTitle') }}</strong></p>
         <ul>
-          <li v-for="req in missingRequirements" :key="req">{{ req }}</li>
+          <li
+            v-for="req in missingRequirements"
+            :key="req"
+          >
+            {{ req }}
+          </li>
         </ul>
       </div>
 
       <!-- Confirm Section -->
       <div class="checkout-actions">
-        <router-link :to="`/booking/${resource.slug}`" class="btn secondary">
+        <router-link
+          :to="`/booking/${resource.slug}`"
+          class="btn secondary"
+        >
           {{ $t('booking.form.cancel') }}
         </router-link>
         <button
@@ -118,7 +161,10 @@
       </div>
 
       <!-- Error -->
-      <div v-if="errorMessage" class="error-message">
+      <div
+        v-if="errorMessage"
+        class="error-message"
+      >
         {{ errorMessage }}
       </div>
     </div>

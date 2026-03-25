@@ -19,9 +19,14 @@ function viewDetail(bookingId: string) {
   <div class="my-bookings">
     <h1>{{ $t('booking.myBookings.title') }}</h1>
 
-    <div v-if="store.loading">{{ $t('booking.myBookings.loading') }}</div>
+    <div v-if="store.loading">
+      {{ $t('booking.myBookings.loading') }}
+    </div>
 
-    <table v-else-if="store.userBookings.length" class="my-bookings__table">
+    <table
+      v-else-if="store.userBookings.length"
+      class="my-bookings__table"
+    >
       <thead>
         <tr>
           <th>{{ $t('booking.myBookings.table.resource') }}</th>
@@ -31,7 +36,10 @@ function viewDetail(bookingId: string) {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="booking in store.userBookings" :key="booking.id">
+        <tr
+          v-for="booking in store.userBookings"
+          :key="booking.id"
+        >
           <td>{{ booking.resource?.name || $t('booking.myBookings.unknown') }}</td>
           <td>{{ new Date(booking.start_at).toLocaleString() }}</td>
           <td>
@@ -40,13 +48,20 @@ function viewDetail(bookingId: string) {
             </span>
           </td>
           <td>
-            <button @click="viewDetail(booking.id)" class="btn btn--small">{{ $t('booking.myBookings.view') }}</button>
+            <button
+              class="btn btn--small"
+              @click="viewDetail(booking.id)"
+            >
+              {{ $t('booking.myBookings.view') }}
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <p v-else>{{ $t('booking.myBookings.noBookings') }}</p>
+    <p v-else>
+      {{ $t('booking.myBookings.noBookings') }}
+    </p>
   </div>
 </template>
 

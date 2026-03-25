@@ -6,10 +6,17 @@
     </div>
 
     <div class="cancel-actions">
-      <router-link to="/booking" class="btn primary">
+      <router-link
+        to="/booking"
+        class="btn primary"
+      >
         {{ $t('booking.cancel.browseCatalogue') }}
       </router-link>
-      <a href="#" class="btn secondary" @click.prevent="goBack">
+      <a
+        href="#"
+        class="btn secondary"
+        @click.prevent="goBack"
+      >
         {{ $t('booking.cancel.tryAgain') }}
       </a>
     </div>

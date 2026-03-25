@@ -1,40 +1,71 @@
 <template>
   <div class="booking-success">
     <!-- Loading -->
-    <div v-if="loading" class="loading-state">
+    <div
+      v-if="loading"
+      class="loading-state"
+    >
       <div class="spinner" />
       <p>{{ $t('booking.success.verifying') }}</p>
     </div>
 
     <template v-else>
       <!-- Status Banner -->
-      <div class="confirmation-banner" :class="`confirmation-banner--${invoiceStatus}`">
-        <h1 v-if="invoiceStatus === 'paid'">{{ $t('booking.success.titlePaid') }}</h1>
-        <h1 v-else-if="invoiceStatus === 'authorized'">{{ $t('booking.success.titleAuthorized') }}</h1>
-        <h1 v-else>{{ $t('booking.success.titlePending') }}</h1>
-        <p v-if="invoiceStatus === 'paid'">{{ $t('booking.success.messagePaid') }}</p>
-        <p v-else>{{ $t('booking.success.messagePending') }}</p>
+      <div
+        class="confirmation-banner"
+        :class="`confirmation-banner--${invoiceStatus}`"
+      >
+        <h1 v-if="invoiceStatus === 'paid'">
+          {{ $t('booking.success.titlePaid') }}
+        </h1>
+        <h1 v-else-if="invoiceStatus === 'authorized'">
+          {{ $t('booking.success.titleAuthorized') }}
+        </h1>
+        <h1 v-else>
+          {{ $t('booking.success.titlePending') }}
+        </h1>
+        <p v-if="invoiceStatus === 'paid'">
+          {{ $t('booking.success.messagePaid') }}
+        </p>
+        <p v-else>
+          {{ $t('booking.success.messagePending') }}
+        </p>
       </div>
 
       <!-- Invoice Details -->
-      <div v-if="invoice" class="card">
+      <div
+        v-if="invoice"
+        class="card"
+      >
         <h2>{{ $t('booking.success.invoiceDetails') }}</h2>
         <div class="confirmation-grid">
-          <div v-if="invoice.invoice_number" class="confirmation-row">
+          <div
+            v-if="invoice.invoice_number"
+            class="confirmation-row"
+          >
             <span class="confirmation-label">{{ $t('booking.success.invoiceNumber') }}</span>
             <span class="confirmation-value confirmation-mono">{{ invoice.invoice_number }}</span>
           </div>
           <div class="confirmation-row">
             <span class="confirmation-label">{{ $t('booking.success.status') }}</span>
             <span class="confirmation-value">
-              <span class="status-badge" :class="invoiceStatus">{{ invoiceStatus }}</span>
+              <span
+                class="status-badge"
+                :class="invoiceStatus"
+              >{{ invoiceStatus }}</span>
             </span>
           </div>
-          <div v-if="invoice.amount" class="confirmation-row">
+          <div
+            v-if="invoice.amount"
+            class="confirmation-row"
+          >
             <span class="confirmation-label">{{ $t('booking.success.amount') }}</span>
             <span class="confirmation-value"><strong>{{ invoice.amount }} {{ invoice.currency }}</strong></span>
           </div>
-          <div v-if="invoice.paid_at" class="confirmation-row">
+          <div
+            v-if="invoice.paid_at"
+            class="confirmation-row"
+          >
             <span class="confirmation-label">{{ $t('booking.success.paidAt') }}</span>
             <span class="confirmation-value">{{ formatDate(invoice.paid_at) }}</span>
           </div>
@@ -42,7 +73,10 @@
       </div>
 
       <!-- Booking Details (from line items) -->
-      <div v-if="bookingResource" class="card">
+      <div
+        v-if="bookingResource"
+        class="card"
+      >
         <h2>{{ $t('booking.success.bookingDetails') }}</h2>
         <div class="booking-resource-block">
           <img
@@ -52,16 +86,29 @@
             class="booking-resource-image"
           >
           <div class="booking-resource-info">
-            <router-link :to="`/booking/${bookingResource.slug}`" class="booking-resource-name">
+            <router-link
+              :to="`/booking/${bookingResource.slug}`"
+              class="booking-resource-name"
+            >
               {{ bookingResource.name }}
             </router-link>
-            <p class="resource-type">{{ bookingResource.resource_type }}</p>
-            <p v-if="bookingResource.description" class="resource-desc">{{ bookingResource.description }}</p>
+            <p class="resource-type">
+              {{ bookingResource.resource_type }}
+            </p>
+            <p
+              v-if="bookingResource.description"
+              class="resource-desc"
+            >
+              {{ bookingResource.description }}
+            </p>
           </div>
         </div>
 
         <div class="confirmation-grid">
-          <div v-if="bookingMeta.start_at" class="confirmation-row">
+          <div
+            v-if="bookingMeta.start_at"
+            class="confirmation-row"
+          >
             <span class="confirmation-label">{{ $t('booking.checkout.dateTime') }}</span>
             <span class="confirmation-value">{{ formatDate(bookingMeta.start_at) }} — {{ formatDate(bookingMeta.end_at) }}</span>
           </div>
@@ -73,7 +120,10 @@
             <span class="confirmation-label">{{ key }}</span>
             <span class="confirmation-value">{{ value }}</span>
           </div>
-          <div v-if="bookingMeta.notes" class="confirmation-row">
+          <div
+            v-if="bookingMeta.notes"
+            class="confirmation-row"
+          >
             <span class="confirmation-label">{{ $t('booking.checkout.notes') }}</span>
             <span class="confirmation-value">{{ bookingMeta.notes }}</span>
           </div>
@@ -82,10 +132,16 @@
 
       <!-- Actions -->
       <div class="checkout-actions">
-        <router-link to="/booking" class="btn secondary">
+        <router-link
+          to="/booking"
+          class="btn secondary"
+        >
           {{ $t('booking.detail.backToCatalogue') }}
         </router-link>
-        <router-link to="/dashboard/bookings" class="btn primary">
+        <router-link
+          to="/dashboard/bookings"
+          class="btn primary"
+        >
           {{ $t('booking.success.viewBookings') }}
         </router-link>
       </div>

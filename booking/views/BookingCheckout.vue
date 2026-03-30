@@ -82,7 +82,7 @@
             <span>{{ formatDateTime(bookingData.start_at) }} — {{ formatDateTime(bookingData.end_at) }}</span>
           </div>
           <div
-            v-if="bookingData.quantity > 1"
+            v-if="bookingData.quantity && bookingData.quantity > 1"
             class="booking-detail-row"
           >
             <span>{{ $t('booking.checkout.quantity') }}</span>
@@ -173,7 +173,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { isAuthenticated as checkAuth } from '@/api';
 import EmailBlock from '@/components/checkout/EmailBlock.vue';
 import PaymentMethodsBlock from '@/components/checkout/PaymentMethodsBlock.vue';
@@ -181,7 +181,6 @@ import TermsCheckbox from '@/components/checkout/TermsCheckbox.vue';
 import BillingAddressBlock from '@/components/checkout/BillingAddressBlock.vue';
 import { useBookingStore } from '../stores/booking';
 
-const route = useRoute();
 const router = useRouter();
 const store = useBookingStore();
 

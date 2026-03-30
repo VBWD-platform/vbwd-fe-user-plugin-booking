@@ -35,7 +35,7 @@
             :key="image.id"
             class="booking-gallery__thumb"
             :class="{ active: activeImageUrl === image.url }"
-            @click="activeImageUrl = image.url"
+            @click="activeImageUrl = image.url || ''"
           >
             <img
               :src="image.url"

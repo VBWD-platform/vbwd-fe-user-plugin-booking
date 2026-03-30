@@ -13,56 +13,53 @@
       <div class="booking-resource-info">
         <router-link
           :to="`/booking/${resource.slug}`"
-          class="booking-resource-name"
+          class="resource-name-link"
         >
-          {{ resource.name }}
+          <h3>{{ resource.name }}</h3>
         </router-link>
-        <p class="resource-type">
-          {{ resource.resource_type }}
-        </p>
         <p
           v-if="resource.description"
-          class="resource-desc"
+          class="resource-description"
         >
           {{ resource.description }}
         </p>
-        <div class="resource-price-row">
-          <span>{{ resource.price }} {{ resource.currency }} / {{ resource.price_unit.replace('per_', '') }}</span>
-        </div>
       </div>
     </div>
 
-    <!-- Booking details -->
-    <div class="booking-details">
+    <div class="booking-price-info">
+      <span class="booking-price">{{ resource.price }} {{ resource.currency }}/{{ resource.price_unit }}</span>
+    </div>
+
+    <h3>{{ $t('booking.confirmation.bookingDetails') }}</h3>
+    <div class="booking-details-grid">
       <div class="detail-row">
         <span class="detail-label">{{ $t('booking.checkout.dateTime') }}</span>
-        <span>{{ formatDateTime(bookingData.start_at) }} — {{ formatDateTime(bookingData.end_at) }}</span>
+        <span class="detail-value">{{ formatDateTime(String(bookingData.start_at || '')) }} — {{ formatDateTime(String(bookingData.end_at || '')) }}</span>
       </div>
       <div
-        v-if="bookingData.quantity > 1"
+        v-if="bookingData.quantity"
         class="detail-row"
       >
         <span class="detail-label">{{ $t('booking.checkout.quantity') }}</span>
-        <span>{{ bookingData.quantity }}</span>
+        <span class="detail-value">{{ bookingData.quantity }}</span>
       </div>
     </div>
 
-    <!-- Custom fields -->
+    <!-- Custom Fields -->
     <div
-      v-if="bookingData.custom_fields && Object.keys(bookingData.custom_fields).length"
-      class="booking-details"
-      style="margin-top: 16px;"
+      v-if="bookingData.custom_fields && Object.keys(bookingData.custom_fields as object).length > 0"
+      class="booking-custom-fields"
     >
       <h3 class="section-label">
-        {{ $t('booking.confirmation.bookingInfo') }}
+        {{ $t('booking.checkout.additionalInfo') }}
       </h3>
       <div
-        v-for="(value, key) in bookingData.custom_fields"
+        v-for="(value, key) in (bookingData.custom_fields as Record<string, unknown>)"
         :key="String(key)"
         class="detail-row"
       >
         <span class="detail-label">{{ key }}</span>
-        <span>{{ value }}</span>
+        <span class="detail-value">{{ value }}</span>
       </div>
     </div>
 
@@ -82,7 +79,26 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { api } from '@/api';
+
+interface BookingResource {
+  name: string;
+  slug: string;
+  description?: string;
+  image_url?: string;
+  price: string;
+  currency: string;
+  price_unit: string;
+  resource_type?: string;
+}
+
+interface BookingData {
+  id?: string;
+  start_at?: string;
+  end_at?: string;
+  quantity?: number;
+  custom_fields?: Record<string, unknown>;
+  notes?: string | null;
+}
 
 const props = defineProps<{
   invoiceId: string;
@@ -90,8 +106,8 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
-const bookingData = ref<Record<string, unknown> | null>(null);
-const resource = ref<Record<string, unknown> | null>(null);
+const bookingData = ref<BookingData | null>(null);
+const resource = ref<BookingResource | null>(null);
 
 function formatDateTime(dateString: string): string {
   return new Date(dateString).toLocaleString();
@@ -100,78 +116,66 @@ function formatDateTime(dateString: string): string {
 onMounted(async () => {
   if (!props.invoiceData) return;
 
-  // Check if this invoice has booking line items
-  const lineItems = (props.invoiceData.line_items as Array<Record<string, unknown>>) || [];
-  const bookingLineItem = lineItems.find(item => {
-    const extraData = item.extra_data as Record<string, unknown> | undefined;
-    return extraData?.plugin === 'booking';
-  });
+  const lineItems = (props.invoiceData.line_items || []) as Array<Record<string, unknown>>;
+  const bookingLineItem = lineItems.find(
+    (item) => (item.metadata as Record<string, unknown>)?.plugin === 'booking'
+  );
 
   if (!bookingLineItem) return;
 
   // Redirect to dedicated booking success page
   router.replace({ path: '/booking/success', query: { invoice_id: props.invoiceId } });
-  return;
-
-  const extraData = bookingLineItem.extra_data as Record<string, unknown>;
-  const bookingId = extraData.booking_id as string;
-  const resourceSlug = extraData.resource_slug as string;
-
-  if (bookingId) {
-    try {
-      const response = await api.get(`/booking/bookings/${bookingId}`) as Record<string, unknown>;
-      bookingData.value = response;
-    } catch {
-      // Booking detail not accessible — show what we have from extra_data
-      bookingData.value = {
-        id: bookingId,
-        start_at: extraData.start_at as string,
-        end_at: extraData.end_at as string,
-        custom_fields: extraData.custom_fields as Record<string, unknown>,
-        quantity: 1,
-        notes: null,
-      };
-    }
-  }
-
-  if (resourceSlug) {
-    try {
-      const response = await api.get(`/booking/resources/${resourceSlug}`) as Record<string, unknown>;
-      resource.value = response;
-    } catch {
-      // Show minimal info from extra_data
-      resource.value = {
-        name: extraData.resource_name as string,
-        slug: resourceSlug,
-        resource_type: extraData.resource_type as string,
-        price: '',
-        currency: '',
-        price_unit: '',
-      };
-    }
-  }
 });
 </script>
 
 <style scoped>
-.booking-resource-block { display: flex; gap: 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f0f0f0; }
-.booking-resource-image { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-.booking-resource-info { flex: 1; }
-.booking-resource-name { font-weight: 600; color: #3498db; text-decoration: none; font-size: 1.1rem; }
-.booking-resource-name:hover { text-decoration: underline; }
-.resource-type { color: #6b7280; font-size: 0.9rem; margin: 4px 0; text-transform: capitalize; }
-.resource-desc { color: #4b5563; font-size: 0.9rem; margin: 4px 0; line-height: 1.5; }
-.resource-price-row { margin-top: 8px; font-weight: 600; color: #3498db; }
-
-.booking-details { }
-.detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f8f9fa; font-size: 0.95rem; }
-.detail-label { color: #6b7280; font-weight: 500; }
-.section-label { font-size: 0.85rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; margin: 0 0 10px; }
-.booking-notes { margin-top: 16px; }
-.booking-notes p { color: #4b5563; font-size: 0.95rem; }
-
-@media (max-width: 600px) {
-  .booking-resource-block { flex-direction: column; }
-  .detail-row { flex-direction: column; gap: 4px; }
+.booking-resource-block {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.booking-resource-image {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.resource-name-link {
+  text-decoration: none;
+  color: inherit;
+}
+.resource-name-link:hover h3 {
+  color: var(--vbwd-color-primary, #3498db);
+}
+.booking-price-info {
+  margin-bottom: 16px;
+}
+.booking-price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--vbwd-color-primary, #3498db);
+}
+.booking-details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--vbwd-border-light, #eee);
+}
+.detail-label {
+  color: var(--vbwd-text-muted, #666);
+  font-size: 0.9rem;
+}
+.detail-value {
+  font-weight: 500;
+}
+.section-label {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
 }
 </style>

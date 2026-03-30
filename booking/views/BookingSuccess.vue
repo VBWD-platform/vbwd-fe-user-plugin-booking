@@ -157,7 +157,10 @@ import { api } from '@/api';
 const route = useRoute();
 const loading = ref(true);
 const invoice = ref<Record<string, unknown> | null>(null);
-const bookingResource = ref<Record<string, unknown> | null>(null);
+const bookingResource = ref<{
+  name: string; slug: string; description?: string; image_url?: string;
+  resource_type?: string; price?: string; currency?: string;
+} | null>(null);
 const bookingMeta = ref<Record<string, unknown>>({});
 
 const invoiceId = computed(() => route.query.invoice_id as string || route.query.invoice as string || '');
@@ -191,7 +194,7 @@ onMounted(async () => {
       const resourceSlug = extraData.resource_slug as string;
       if (resourceSlug) {
         try {
-          bookingResource.value = await api.get(`/booking/resources/${resourceSlug}`) as Record<string, unknown>;
+          bookingResource.value = await api.get(`/booking/resources/${resourceSlug}`) as typeof bookingResource.value;
         } catch {
           bookingResource.value = {
             name: extraData.resource_name as string,

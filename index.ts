@@ -25,14 +25,14 @@ export const bookingPlugin: IPlugin = {
     sdk.addTranslations('zh', zh);
 
     // Register booking confirmation details into checkout confirmation page
-    import('../checkout/checkoutConfirmationRegistry')
+    import('../../vue/src/registries/checkoutConfirmationRegistry')
       .then(({ checkoutConfirmationRegistry }) => {
         import('./booking/components/BookingConfirmationDetails.vue').then((module) => {
           checkoutConfirmationRegistry.register('booking', module.default);
         });
       })
       .catch(() => {
-        // Checkout plugin not installed — skip
+        // Registry not available — skip
       });
 
     // Register CMS vue-component widgets
@@ -89,24 +89,6 @@ export const bookingPlugin: IPlugin = {
       name: 'booking-checkout',
       component: () => import('./booking/views/BookingCheckout.vue'),
       meta: { requiresAuth: false, noLayout: true },
-    });
-
-    // Booking success page — CMS page with invoice details
-    sdk.addRoute({
-      path: '/booking/success',
-      name: 'booking-success',
-      component: () => import('../cms/src/views/CmsPage.vue'),
-      props: { slug: 'booking-success' },
-      meta: { requiresAuth: true, cmsLayout: true },
-    });
-
-    // Booking cancel page — CMS page shown when payment is cancelled
-    sdk.addRoute({
-      path: '/booking/cancel',
-      name: 'booking-cancel',
-      component: () => import('../cms/src/views/CmsPage.vue'),
-      props: { slug: 'booking-cancel' },
-      meta: { requiresAuth: false, cmsLayout: true },
     });
 
     // Dashboard routes (auth required)

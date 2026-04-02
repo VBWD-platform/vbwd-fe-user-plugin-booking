@@ -256,10 +256,19 @@ async function handlePay() {
     }
 
     if (invoiceId.value && selectedPaymentMethod.value) {
-      router.push({
-        path: `/pay/${selectedPaymentMethod.value}`,
-        query: { invoice: invoiceId.value },
-      });
+      const method = selectedPaymentMethod.value;
+      if (method === 'stripe' || method === 'paypal' || method === 'yookassa') {
+        router.push({
+          path: `/pay/${method}`,
+          query: { invoice: invoiceId.value },
+        });
+      } else {
+        // Basic/invoice — go straight to confirmation
+        router.push({
+          path: '/checkout/confirmation',
+          query: { invoice_id: invoiceId.value },
+        });
+      }
     }
   } catch (error) {
     errorMessage.value = error instanceof Error ? error.message : 'Checkout failed';

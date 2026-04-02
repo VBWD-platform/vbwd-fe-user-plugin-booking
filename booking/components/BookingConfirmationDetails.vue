@@ -78,7 +78,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 
 interface BookingResource {
   name: string;
@@ -93,6 +92,7 @@ interface BookingResource {
 
 interface BookingData {
   id?: string;
+  invoice_id?: string;
   start_at?: string;
   end_at?: string;
   quantity?: number;
@@ -105,7 +105,6 @@ const props = defineProps<{
   invoiceData: Record<string, unknown> | null;
 }>();
 
-const router = useRouter();
 const bookingData = ref<BookingData | null>(null);
 const resource = ref<BookingResource | null>(null);
 
@@ -123,8 +122,36 @@ onMounted(async () => {
 
   if (!bookingLineItem) return;
 
-  // Redirect to dedicated booking success page
-  router.replace({ path: '/booking/success', query: { invoice_id: props.invoiceId } });
+  // Fetch booking details to show inline on the shared confirmation page
+  const metadata = bookingLineItem.metadata as Record<string, unknown>;
+  const resourceSlug = metadata?.resource_slug as string;
+
+  if (resourceSlug) {
+    try {
+      const { api } = await import('@/api');
+      const resourceResponse = await api.get(`/booking/resources/${resourceSlug}`) as Record<string, unknown>;
+      resource.value = (resourceResponse.resource || resourceResponse) as BookingResource;
+
+      // Try to find the booking record
+      const bookingsResponse = await api.get('/booking/bookings') as { bookings: BookingData[] };
+      const matchingBooking = bookingsResponse.bookings?.find(
+        (b) => String(b.invoice_id) === props.invoiceId
+      );
+      if (matchingBooking) {
+        bookingData.value = matchingBooking;
+      } else {
+        // Construct from invoice metadata
+        bookingData.value = {
+          start_at: metadata.start_at as string,
+          end_at: metadata.end_at as string,
+          quantity: metadata.quantity as number,
+          notes: metadata.notes as string,
+        };
+      }
+    } catch {
+      // Booking data not available — component stays hidden
+    }
+  }
 });
 </script>
 

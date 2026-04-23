@@ -21,7 +21,28 @@
       "pickDate": "เลือกวันที่เพื่อดูช่วงเวลาว่าง",
       "requiredFields": "ข้อมูลการจองที่จำเป็น",
       "required": "จำเป็น",
-      "backToCatalogue": "กลับไปที่แคตตาล็อก"
+      "backToCatalogue": "กลับไปที่แคตตาล็อก",
+      "back": "กลับไปยังการจอง",
+      "dateTime": "วันและเวลา",
+      "duration": "ระยะเวลา",
+      "quantity": "จำนวน",
+      "price": "ราคา",
+      "notes": "หมายเหตุ",
+      "actions": {
+        "cancel": "ยกเลิกการจอง",
+        "cancelConfirmTitle": "ยกเลิกการจองนี้?",
+        "cancelConfirmBody": "การจอง {resource} ของคุณในวันที่ {when} จะถูกยกเลิก",
+        "cancelPolicy": "คุณสามารถยกเลิกได้ล่วงหน้าอย่างน้อย {hours} ชั่วโมงก่อนเริ่มเท่านั้น หลังจากนั้นจะยกเลิกไม่ได้",
+        "cancelBooking": "ใช่ ยกเลิกเลย",
+        "keepBooking": "เก็บการจองไว้",
+        "cancelling": "กำลังยกเลิก...",
+        "cancelError": "ยกเลิกไม่สำเร็จ กรุณาลองใหม่",
+        "reschedule": "เลื่อนเวลา",
+        "addToCalendar": "เพิ่มลงปฏิทิน",
+        "downloadPdf": "ดาวน์โหลด PDF",
+        "bookAgain": "จองอีกครั้ง",
+        "viewInvoice": "ดูใบแจ้งหนี้"
+      }
     },
     "form": {
       "bookTitle": "จอง: {name}",
@@ -46,12 +67,23 @@
       "loading": "กำลังโหลด...",
       "noBookings": "คุณยังไม่มีการจอง",
       "unknown": "ไม่ทราบ",
-      "view": "ดู",
       "table": {
         "resource": "ทรัพยากร",
         "date": "วันที่",
-        "status": "สถานะ",
-        "actions": "การดำเนินการ"
+        "status": "สถานะ"
+      },
+      "tabs": {
+        "upcoming": "กำลังจะมาถึง",
+        "past": "ที่ผ่านมา"
+      },
+      "empty": {
+        "upcoming": "ไม่มีการจองที่กำลังจะมาถึง",
+        "past": "ยังไม่มีการจองที่ผ่านมา"
+      },
+      "pagination": {
+        "prev": "ก่อนหน้า",
+        "next": "ถัดไป",
+        "pageOf": "หน้า {page} จาก {total}"
       }
     },
     "checkout": {
@@ -81,6 +113,31 @@
       "resourceDetails": "รายละเอียดทรัพยากร",
       "bookingInfo": "ข้อมูลการจอง",
       "viewMyBookings": "ดูการจองของฉัน"
-    }
+    },
+    "status": {
+      "pending": "รอดำเนินการ",
+      "confirmed": "ยืนยันแล้ว",
+      "cancelled": "ยกเลิกแล้ว",
+      "completed": "เสร็จสิ้น"
+    },
+    "dashboard": {
+      "title": "การจองที่กำลังจะมาถึงของคุณ",
+      "viewAll": "ดูทั้งหมด",
+      "empty": "ไม่มีการจองที่กำลังจะมาถึง"
+    },
+    "reschedule": {
+      "title": "เลื่อนเวลาการจอง",
+      "back": "กลับไปยังการจอง",
+      "current": "การจองปัจจุบัน",
+      "pickDate": "เลือกวันที่ใหม่",
+      "loadingSlots": "กำลังโหลดช่วงเวลาที่ว่าง...",
+      "noSlots": "ไม่มีช่วงเวลาว่างในวันนี้ กรุณาเลือกวันอื่น",
+      "newTime": "เวลาใหม่: {when}",
+      "confirm": "ยืนยันการเลื่อน",
+      "submitting": "กำลังเลื่อนเวลา...",
+      "cancel": "ยกเลิก",
+      "errorGeneric": "เลื่อนไม่สำเร็จ กรุณาลองช่วงเวลาอื่น"
+    },
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
   }
 }

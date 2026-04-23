@@ -21,7 +21,28 @@
       "pickDate": "Seleccione una fecha para ver los horarios disponibles.",
       "requiredFields": "Información de reserva requerida",
       "required": "obligatorio",
-      "backToCatalogue": "Volver al catálogo"
+      "backToCatalogue": "Volver al catálogo",
+      "back": "Volver a mis reservas",
+      "dateTime": "Fecha y hora",
+      "duration": "Duración",
+      "quantity": "Cantidad",
+      "price": "Precio",
+      "notes": "Notas",
+      "actions": {
+        "cancel": "Cancelar reserva",
+        "cancelConfirmTitle": "¿Cancelar esta reserva?",
+        "cancelConfirmBody": "Se cancelará tu reserva de {resource} el {when}.",
+        "cancelPolicy": "Solo puedes cancelar hasta {hours} horas antes de la hora de inicio. Después ya no se puede cancelar.",
+        "cancelBooking": "Sí, cancelar",
+        "keepBooking": "Mantener reserva",
+        "cancelling": "Cancelando...",
+        "cancelError": "No se pudo cancelar la reserva. Inténtalo de nuevo.",
+        "reschedule": "Reprogramar",
+        "addToCalendar": "Añadir al calendario",
+        "downloadPdf": "Descargar PDF",
+        "bookAgain": "Reservar de nuevo",
+        "viewInvoice": "Ver factura"
+      }
     },
     "form": {
       "bookTitle": "Reservar: {name}",
@@ -46,12 +67,23 @@
       "loading": "Cargando...",
       "noBookings": "Aún no tienes reservas.",
       "unknown": "Desconocido",
-      "view": "Ver",
       "table": {
         "resource": "Recurso",
         "date": "Fecha",
-        "status": "Estado",
-        "actions": "Acciones"
+        "status": "Estado"
+      },
+      "tabs": {
+        "upcoming": "Próximas",
+        "past": "Pasadas"
+      },
+      "empty": {
+        "upcoming": "No tienes reservas próximas.",
+        "past": "Aún no hay reservas pasadas."
+      },
+      "pagination": {
+        "prev": "Anterior",
+        "next": "Siguiente",
+        "pageOf": "Página {page} de {total}"
       }
     },
     "checkout": {
@@ -81,6 +113,31 @@
       "resourceDetails": "Detalles del recurso",
       "bookingInfo": "Información de la reserva",
       "viewMyBookings": "Ver mis reservas"
-    }
+    },
+    "status": {
+      "pending": "Pendiente",
+      "confirmed": "Confirmada",
+      "cancelled": "Cancelada",
+      "completed": "Completada"
+    },
+    "dashboard": {
+      "title": "Tus próximas reservas",
+      "viewAll": "Ver todas",
+      "empty": "No tienes reservas próximas."
+    },
+    "reschedule": {
+      "title": "Reprogramar reserva",
+      "back": "Volver a la reserva",
+      "current": "Reserva actual",
+      "pickDate": "Elige una nueva fecha",
+      "loadingSlots": "Cargando horarios disponibles...",
+      "noSlots": "No hay horarios disponibles ese día. Prueba otro.",
+      "newTime": "Nueva hora: {when}",
+      "confirm": "Confirmar cambio",
+      "submitting": "Reprogramando...",
+      "cancel": "Cancelar",
+      "errorGeneric": "No se pudo reprogramar. Prueba otro horario."
+    },
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
   }
 }

@@ -21,7 +21,28 @@
       "pickDate": "Pick a date to see available slots.",
       "requiredFields": "Booking Information Required",
       "required": "required",
-      "backToCatalogue": "Back to catalogue"
+      "backToCatalogue": "Back to catalogue",
+      "back": "Back to bookings",
+      "dateTime": "Date & time",
+      "duration": "Duration",
+      "quantity": "Quantity",
+      "price": "Price",
+      "notes": "Notes",
+      "actions": {
+        "cancel": "Cancel booking",
+        "cancelConfirmTitle": "Cancel this booking?",
+        "cancelConfirmBody": "This will cancel your booking for {resource} on {when}.",
+        "cancelPolicy": "You can only cancel up to {hours} hours before the start time. After that, the booking cannot be cancelled.",
+        "cancelBooking": "Yes, cancel",
+        "keepBooking": "Keep booking",
+        "cancelling": "Cancelling...",
+        "cancelError": "Could not cancel this booking. Please try again.",
+        "reschedule": "Reschedule",
+        "addToCalendar": "Add to calendar",
+        "downloadPdf": "Download PDF",
+        "bookAgain": "Book again",
+        "viewInvoice": "View invoice"
+      }
     },
     "form": {
       "bookTitle": "Book: {name}",
@@ -95,13 +116,48 @@
       "loading": "Loading...",
       "noBookings": "You have no bookings yet.",
       "unknown": "Unknown",
-      "view": "View",
       "table": {
         "resource": "Resource",
         "date": "Date",
-        "status": "Status",
-        "actions": "Actions"
+        "status": "Status"
+      },
+      "tabs": {
+        "upcoming": "Upcoming",
+        "past": "Past"
+      },
+      "empty": {
+        "upcoming": "No upcoming bookings.",
+        "past": "No past bookings yet."
+      },
+      "pagination": {
+        "prev": "Previous",
+        "next": "Next",
+        "pageOf": "Page {page} of {total}"
       }
+    },
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "dashboard": {
+      "title": "Your upcoming bookings",
+      "viewAll": "View all",
+      "empty": "No upcoming bookings."
+    },
+    "reschedule": {
+      "title": "Reschedule booking",
+      "back": "Back to booking",
+      "current": "Current booking",
+      "pickDate": "Pick a new date",
+      "loadingSlots": "Loading available slots...",
+      "noSlots": "No slots available on this date. Try another day.",
+      "newTime": "New time: {when}",
+      "confirm": "Confirm reschedule",
+      "submitting": "Rescheduling...",
+      "cancel": "Cancel",
+      "errorGeneric": "Could not reschedule. Please try another slot."
     }
   }
 }

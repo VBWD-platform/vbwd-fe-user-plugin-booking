@@ -21,7 +21,28 @@
       "pickDate": "Choisissez une date pour voir les créneaux disponibles.",
       "requiredFields": "Informations de réservation requises",
       "required": "obligatoire",
-      "backToCatalogue": "Retour au catalogue"
+      "backToCatalogue": "Retour au catalogue",
+      "back": "Retour aux réservations",
+      "dateTime": "Date et heure",
+      "duration": "Durée",
+      "quantity": "Quantité",
+      "price": "Prix",
+      "notes": "Notes",
+      "actions": {
+        "cancel": "Annuler la réservation",
+        "cancelConfirmTitle": "Annuler cette réservation ?",
+        "cancelConfirmBody": "Votre réservation pour {resource} le {when} sera annulée.",
+        "cancelPolicy": "Vous pouvez annuler jusqu'à {hours} heures avant le début. Après, l'annulation n'est plus possible.",
+        "cancelBooking": "Oui, annuler",
+        "keepBooking": "Conserver",
+        "cancelling": "Annulation...",
+        "cancelError": "Annulation impossible. Veuillez réessayer.",
+        "reschedule": "Reporter",
+        "addToCalendar": "Ajouter au calendrier",
+        "downloadPdf": "Télécharger le PDF",
+        "bookAgain": "Réserver à nouveau",
+        "viewInvoice": "Voir la facture"
+      }
     },
     "form": {
       "bookTitle": "Réserver : {name}",
@@ -46,12 +67,23 @@
       "loading": "Chargement...",
       "noBookings": "Vous n'avez pas encore de réservations.",
       "unknown": "Inconnu",
-      "view": "Voir",
       "table": {
         "resource": "Ressource",
         "date": "Date",
-        "status": "Statut",
-        "actions": "Actions"
+        "status": "Statut"
+      },
+      "tabs": {
+        "upcoming": "À venir",
+        "past": "Passées"
+      },
+      "empty": {
+        "upcoming": "Aucune réservation à venir.",
+        "past": "Aucune réservation passée."
+      },
+      "pagination": {
+        "prev": "Précédent",
+        "next": "Suivant",
+        "pageOf": "Page {page} sur {total}"
       }
     },
     "checkout": {
@@ -81,6 +113,31 @@
       "resourceDetails": "Détails de la ressource",
       "bookingInfo": "Informations de réservation",
       "viewMyBookings": "Voir mes réservations"
-    }
+    },
+    "status": {
+      "pending": "En attente",
+      "confirmed": "Confirmée",
+      "cancelled": "Annulée",
+      "completed": "Terminée"
+    },
+    "dashboard": {
+      "title": "Vos prochaines réservations",
+      "viewAll": "Tout voir",
+      "empty": "Aucune réservation à venir."
+    },
+    "reschedule": {
+      "title": "Reporter la réservation",
+      "back": "Retour à la réservation",
+      "current": "Réservation actuelle",
+      "pickDate": "Choisissez une nouvelle date",
+      "loadingSlots": "Chargement des créneaux disponibles...",
+      "noSlots": "Aucun créneau disponible ce jour. Essayez un autre jour.",
+      "newTime": "Nouveau créneau : {when}",
+      "confirm": "Confirmer le report",
+      "submitting": "Report en cours...",
+      "cancel": "Annuler",
+      "errorGeneric": "Report impossible. Essayez un autre créneau."
+    },
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
   }
 }

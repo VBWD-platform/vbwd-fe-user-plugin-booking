@@ -98,6 +98,27 @@ export const bookingPlugin: IPlugin = {
       component: () => import('./booking/views/MyBookings.vue'),
       meta: { requiresAuth: true },
     });
+    sdk.addRoute({
+      path: '/dashboard/bookings/:id',
+      name: 'booking-detail',
+      component: () => import('./booking/views/BookingDetail.vue'),
+      meta: { requiresAuth: true },
+    });
+    sdk.addRoute({
+      path: '/dashboard/bookings/:id/reschedule',
+      name: 'booking-reschedule',
+      component: () => import('./booking/views/BookingReschedule.vue'),
+      meta: { requiresAuth: true },
+    });
+
+    // Dashboard widget — the core Dashboard.vue picks up any component whose
+    // registered name starts with "Dashboard*" and renders it as a panel.
+    // ComponentDefinition is a lazy-loader fn, so we pass the import() call
+    // itself rather than the resolved module.
+    sdk.addComponent(
+      'DashboardNextBooking',
+      () => import('./booking/components/DashboardNextBooking.vue'),
+    );
   },
 
   activate() {},

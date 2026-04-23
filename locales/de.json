@@ -21,7 +21,28 @@
       "pickDate": "Wählen Sie ein Datum, um verfügbare Zeitfenster zu sehen.",
       "requiredFields": "Erforderliche Buchungsinformationen",
       "required": "erforderlich",
-      "backToCatalogue": "Zurück zum Katalog"
+      "backToCatalogue": "Zurück zum Katalog",
+      "back": "Zurück zu den Buchungen",
+      "dateTime": "Datum & Uhrzeit",
+      "duration": "Dauer",
+      "quantity": "Menge",
+      "price": "Preis",
+      "notes": "Notizen",
+      "actions": {
+        "cancel": "Buchung stornieren",
+        "cancelConfirmTitle": "Diese Buchung stornieren?",
+        "cancelConfirmBody": "Damit wird Ihre Buchung für {resource} am {when} storniert.",
+        "cancelPolicy": "Sie können nur bis {hours} Stunden vor Beginn stornieren. Danach ist keine Stornierung mehr möglich.",
+        "cancelBooking": "Ja, stornieren",
+        "keepBooking": "Buchung behalten",
+        "cancelling": "Wird storniert...",
+        "cancelError": "Stornierung fehlgeschlagen. Bitte erneut versuchen.",
+        "reschedule": "Umbuchen",
+        "addToCalendar": "Zum Kalender hinzufügen",
+        "downloadPdf": "PDF herunterladen",
+        "bookAgain": "Erneut buchen",
+        "viewInvoice": "Rechnung anzeigen"
+      }
     },
     "form": {
       "bookTitle": "Buchen: {name}",
@@ -46,12 +67,23 @@
       "loading": "Laden...",
       "noBookings": "Sie haben noch keine Buchungen.",
       "unknown": "Unbekannt",
-      "view": "Anzeigen",
       "table": {
         "resource": "Ressource",
         "date": "Datum",
-        "status": "Status",
-        "actions": "Aktionen"
+        "status": "Status"
+      },
+      "tabs": {
+        "upcoming": "Bevorstehend",
+        "past": "Vergangen"
+      },
+      "empty": {
+        "upcoming": "Keine bevorstehenden Buchungen.",
+        "past": "Noch keine vergangenen Buchungen."
+      },
+      "pagination": {
+        "prev": "Zurück",
+        "next": "Weiter",
+        "pageOf": "Seite {page} von {total}"
       }
     },
     "checkout": {
@@ -81,6 +113,31 @@
       "resourceDetails": "Ressourcendetails",
       "bookingInfo": "Buchungsinformationen",
       "viewMyBookings": "Meine Buchungen anzeigen"
-    }
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "confirmed": "Bestätigt",
+      "cancelled": "Storniert",
+      "completed": "Abgeschlossen"
+    },
+    "dashboard": {
+      "title": "Ihre bevorstehenden Buchungen",
+      "viewAll": "Alle anzeigen",
+      "empty": "Keine bevorstehenden Buchungen."
+    },
+    "reschedule": {
+      "title": "Buchung umbuchen",
+      "back": "Zurück zur Buchung",
+      "current": "Aktuelle Buchung",
+      "pickDate": "Neues Datum wählen",
+      "loadingSlots": "Verfügbare Zeitfenster werden geladen...",
+      "noSlots": "An diesem Tag sind keine Zeitfenster frei. Bitte anderen Tag wählen.",
+      "newTime": "Neuer Termin: {when}",
+      "confirm": "Umbuchung bestätigen",
+      "submitting": "Umbuchung läuft...",
+      "cancel": "Abbrechen",
+      "errorGeneric": "Umbuchung nicht möglich. Bitte anderen Slot wählen."
+    },
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
   }
 }

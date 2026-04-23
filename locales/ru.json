@@ -21,7 +21,28 @@
       "pickDate": "Выберите дату, чтобы увидеть доступные слоты.",
       "requiredFields": "Необходимая информация для бронирования",
       "required": "обязательно",
-      "backToCatalogue": "Назад к каталогу"
+      "backToCatalogue": "Назад к каталогу",
+      "back": "Назад к бронированиям",
+      "dateTime": "Дата и время",
+      "duration": "Длительность",
+      "quantity": "Количество",
+      "price": "Цена",
+      "notes": "Примечания",
+      "actions": {
+        "cancel": "Отменить бронирование",
+        "cancelConfirmTitle": "Отменить это бронирование?",
+        "cancelConfirmBody": "Ваше бронирование «{resource}» на {when} будет отменено.",
+        "cancelPolicy": "Отмена возможна не позднее, чем за {hours} ч до начала. После этого отменить нельзя.",
+        "cancelBooking": "Да, отменить",
+        "keepBooking": "Оставить",
+        "cancelling": "Отменяем...",
+        "cancelError": "Не удалось отменить. Попробуйте ещё раз.",
+        "reschedule": "Перенести",
+        "addToCalendar": "Добавить в календарь",
+        "downloadPdf": "Скачать PDF",
+        "bookAgain": "Забронировать снова",
+        "viewInvoice": "Посмотреть счёт"
+      }
     },
     "form": {
       "bookTitle": "Бронирование: {name}",
@@ -46,12 +67,23 @@
       "loading": "Загрузка...",
       "noBookings": "У вас пока нет бронирований.",
       "unknown": "Неизвестно",
-      "view": "Просмотр",
       "table": {
         "resource": "Ресурс",
         "date": "Дата",
-        "status": "Статус",
-        "actions": "Действия"
+        "status": "Статус"
+      },
+      "tabs": {
+        "upcoming": "Предстоящие",
+        "past": "Прошедшие"
+      },
+      "empty": {
+        "upcoming": "Нет предстоящих бронирований.",
+        "past": "Прошедших бронирований пока нет."
+      },
+      "pagination": {
+        "prev": "Назад",
+        "next": "Вперёд",
+        "pageOf": "Страница {page} из {total}"
       }
     },
     "checkout": {
@@ -81,6 +113,31 @@
       "resourceDetails": "Детали ресурса",
       "bookingInfo": "Информация о бронировании",
       "viewMyBookings": "Мои бронирования"
-    }
+    },
+    "status": {
+      "pending": "Ожидает",
+      "confirmed": "Подтверждено",
+      "cancelled": "Отменено",
+      "completed": "Завершено"
+    },
+    "dashboard": {
+      "title": "Ваши предстоящие бронирования",
+      "viewAll": "Показать все",
+      "empty": "Нет предстоящих бронирований."
+    },
+    "reschedule": {
+      "title": "Перенос бронирования",
+      "back": "Назад к бронированию",
+      "current": "Текущее бронирование",
+      "pickDate": "Выберите новую дату",
+      "loadingSlots": "Загрузка свободных слотов...",
+      "noSlots": "На эту дату свободных слотов нет. Попробуйте другую.",
+      "newTime": "Новое время: {when}",
+      "confirm": "Подтвердить перенос",
+      "submitting": "Переносим...",
+      "cancel": "Отмена",
+      "errorGeneric": "Не удалось перенести. Попробуйте другой слот."
+    },
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
   }
 }

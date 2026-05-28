@@ -97,7 +97,8 @@
       "processing": "Procesando...",
       "bookingNotFound": "Reserva no encontrada.",
       "orderSummary": "Resumen del pedido",
-      "requirementsTitle": "Antes de poder pagar:"
+      "requirementsTitle": "Antes de poder pagar:",
+      "additionalInfo": "Información adicional"
     },
     "confirmation": {
       "titleConfirmed": "¡Reserva confirmada!",
@@ -138,6 +139,27 @@
       "cancel": "Cancelar",
       "errorGeneric": "No se pudo reprogramar. Prueba otro horario."
     },
-    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending.",
+    "cancel": {
+      "title": "Reserva cancelada",
+      "message": "Su reserva no se completó.",
+      "tryAgain": "Intentar de nuevo",
+      "browseCatalogue": "Explorar catálogo"
+    },
+    "success": {
+      "titlePaid": "Reserva confirmada",
+      "titlePending": "Reserva pendiente",
+      "titleAuthorized": "Reserva autorizada",
+      "messagePaid": "Su reserva ha sido pagada y confirmada.",
+      "messagePending": "Estamos procesando su pago.",
+      "verifying": "Verificando pago…",
+      "bookingDetails": "Detalles de la reserva",
+      "invoiceDetails": "Detalles de la factura",
+      "invoiceNumber": "Número de factura",
+      "amount": "Importe",
+      "status": "Estado",
+      "paidAt": "Pagado el",
+      "viewBookings": "Ver reservas"
+    }
   }
 }

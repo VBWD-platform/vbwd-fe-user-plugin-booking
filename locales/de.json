@@ -97,7 +97,8 @@
       "processing": "Verarbeitung...",
       "bookingNotFound": "Buchung nicht gefunden.",
       "orderSummary": "Bestellübersicht",
-      "requirementsTitle": "Bevor Sie bezahlen können:"
+      "requirementsTitle": "Bevor Sie bezahlen können:",
+      "additionalInfo": "Zusätzliche Informationen"
     },
     "confirmation": {
       "titleConfirmed": "Buchung bestätigt!",
@@ -138,6 +139,27 @@
       "cancel": "Abbrechen",
       "errorGeneric": "Umbuchung nicht möglich. Bitte anderen Slot wählen."
     },
-    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending.",
+    "cancel": {
+      "title": "Buchung storniert",
+      "message": "Ihre Buchung wurde nicht abgeschlossen.",
+      "tryAgain": "Erneut versuchen",
+      "browseCatalogue": "Katalog durchsuchen"
+    },
+    "success": {
+      "titlePaid": "Buchung bestätigt",
+      "titlePending": "Buchung ausstehend",
+      "titleAuthorized": "Buchung autorisiert",
+      "messagePaid": "Ihre Buchung wurde bezahlt und bestätigt.",
+      "messagePending": "Wir verarbeiten Ihre Zahlung.",
+      "verifying": "Zahlung wird überprüft…",
+      "bookingDetails": "Buchungsdetails",
+      "invoiceDetails": "Rechnungsdetails",
+      "invoiceNumber": "Rechnungsnummer",
+      "amount": "Betrag",
+      "status": "Status",
+      "paidAt": "Bezahlt am",
+      "viewBookings": "Buchungen anzeigen"
+    }
   }
 }

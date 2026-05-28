@@ -97,7 +97,8 @@
       "processing": "处理中...",
       "bookingNotFound": "未找到预订。",
       "orderSummary": "订单摘要",
-      "requirementsTitle": "付款前请完成："
+      "requirementsTitle": "付款前请完成：",
+      "additionalInfo": "附加信息"
     },
     "confirmation": {
       "titleConfirmed": "预订已确认！",
@@ -138,6 +139,27 @@
       "cancel": "取消",
       "errorGeneric": "无法改期。请尝试其他时段。"
     },
-    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending.",
+    "cancel": {
+      "title": "预订已取消",
+      "message": "您的预订未完成。",
+      "tryAgain": "再试一次",
+      "browseCatalogue": "浏览目录"
+    },
+    "success": {
+      "titlePaid": "预订已确认",
+      "titlePending": "预订处理中",
+      "titleAuthorized": "预订已授权",
+      "messagePaid": "您的预订已支付并确认。",
+      "messagePending": "我们正在处理您的付款。",
+      "verifying": "正在验证付款…",
+      "bookingDetails": "预订详情",
+      "invoiceDetails": "发票详情",
+      "invoiceNumber": "发票号码",
+      "amount": "金额",
+      "status": "状态",
+      "paidAt": "付款时间",
+      "viewBookings": "查看预订"
+    }
   }
 }

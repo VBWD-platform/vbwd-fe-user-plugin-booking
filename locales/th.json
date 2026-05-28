@@ -97,7 +97,8 @@
       "processing": "กำลังดำเนินการ...",
       "bookingNotFound": "ไม่พบการจอง",
       "orderSummary": "สรุปคำสั่งซื้อ",
-      "requirementsTitle": "ก่อนชำระเงิน:"
+      "requirementsTitle": "ก่อนชำระเงิน:",
+      "additionalInfo": "ข้อมูลเพิ่มเติม"
     },
     "confirmation": {
       "titleConfirmed": "ยืนยันการจองแล้ว!",
@@ -138,6 +139,27 @@
       "cancel": "ยกเลิก",
       "errorGeneric": "เลื่อนไม่สำเร็จ กรุณาลองช่วงเวลาอื่น"
     },
-    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending.",
+    "cancel": {
+      "title": "ยกเลิกการจองแล้ว",
+      "message": "การจองของคุณยังไม่เสร็จสมบูรณ์",
+      "tryAgain": "ลองอีกครั้ง",
+      "browseCatalogue": "ดูแคตตาล็อก"
+    },
+    "success": {
+      "titlePaid": "การจองได้รับการยืนยัน",
+      "titlePending": "การจองอยู่ระหว่างดำเนินการ",
+      "titleAuthorized": "การจองได้รับการอนุมัติ",
+      "messagePaid": "การจองของคุณได้รับการชำระเงินและยืนยันแล้ว",
+      "messagePending": "เรากำลังดำเนินการชำระเงินของคุณ",
+      "verifying": "กำลังตรวจสอบการชำระเงิน…",
+      "bookingDetails": "รายละเอียดการจอง",
+      "invoiceDetails": "รายละเอียดใบแจ้งหนี้",
+      "invoiceNumber": "หมายเลขใบแจ้งหนี้",
+      "amount": "จำนวน",
+      "status": "สถานะ",
+      "paidAt": "ชำระเมื่อ",
+      "viewBookings": "ดูการจอง"
+    }
   }
 }

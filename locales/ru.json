@@ -97,7 +97,8 @@
       "processing": "Обработка...",
       "bookingNotFound": "Бронирование не найдено.",
       "orderSummary": "Сводка заказа",
-      "requirementsTitle": "Перед оплатой:"
+      "requirementsTitle": "Перед оплатой:",
+      "additionalInfo": "Дополнительная информация"
     },
     "confirmation": {
       "titleConfirmed": "Бронирование подтверждено!",
@@ -138,6 +139,27 @@
       "cancel": "Отмена",
       "errorGeneric": "Не удалось перенести. Попробуйте другой слот."
     },
-    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending.",
+    "cancel": {
+      "title": "Бронирование отменено",
+      "message": "Бронирование не было завершено.",
+      "tryAgain": "Попробовать снова",
+      "browseCatalogue": "Перейти к каталогу"
+    },
+    "success": {
+      "titlePaid": "Бронирование подтверждено",
+      "titlePending": "Бронирование в ожидании",
+      "titleAuthorized": "Бронирование авторизовано",
+      "messagePaid": "Бронирование оплачено и подтверждено.",
+      "messagePending": "Мы обрабатываем ваш платеж.",
+      "verifying": "Проверка платежа…",
+      "bookingDetails": "Детали бронирования",
+      "invoiceDetails": "Детали счета",
+      "invoiceNumber": "Номер счета",
+      "amount": "Сумма",
+      "status": "Статус",
+      "paidAt": "Оплачено",
+      "viewBookings": "Посмотреть бронирования"
+    }
   }
 }

@@ -97,7 +97,8 @@
       "processing": "処理中...",
       "bookingNotFound": "予約が見つかりません。",
       "orderSummary": "注文概要",
-      "requirementsTitle": "お支払い前に："
+      "requirementsTitle": "お支払い前に：",
+      "additionalInfo": "追加情報"
     },
     "confirmation": {
       "titleConfirmed": "予約確認済み！",
@@ -138,6 +139,27 @@
       "cancel": "キャンセル",
       "errorGeneric": "変更できませんでした。別の時間をお試しください。"
     },
-    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending.",
+    "cancel": {
+      "title": "予約がキャンセルされました",
+      "message": "予約は完了しませんでした。",
+      "tryAgain": "もう一度試す",
+      "browseCatalogue": "カタログを見る"
+    },
+    "success": {
+      "titlePaid": "予約が確定しました",
+      "titlePending": "予約は保留中です",
+      "titleAuthorized": "予約が承認されました",
+      "messagePaid": "ご予約が支払われ、確定されました。",
+      "messagePending": "お支払いを処理しています。",
+      "verifying": "支払いを確認中…",
+      "bookingDetails": "予約詳細",
+      "invoiceDetails": "請求書の詳細",
+      "invoiceNumber": "請求書番号",
+      "amount": "金額",
+      "status": "ステータス",
+      "paidAt": "支払日",
+      "viewBookings": "予約を見る"
+    }
   }
 }

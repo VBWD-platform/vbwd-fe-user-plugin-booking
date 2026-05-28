@@ -97,7 +97,8 @@
       "processing": "Traitement...",
       "bookingNotFound": "Réservation introuvable.",
       "orderSummary": "Résumé de la commande",
-      "requirementsTitle": "Avant de pouvoir payer :"
+      "requirementsTitle": "Avant de pouvoir payer :",
+      "additionalInfo": "Informations supplémentaires"
     },
     "confirmation": {
       "titleConfirmed": "Réservation confirmée !",
@@ -138,6 +139,27 @@
       "cancel": "Annuler",
       "errorGeneric": "Report impossible. Essayez un autre créneau."
     },
-    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending."
+    "__sprint28_review": "Machine-translated Sprint 28 strings — review by native speaker pending.",
+    "cancel": {
+      "title": "Réservation annulée",
+      "message": "Votre réservation n'a pas été complétée.",
+      "tryAgain": "Réessayer",
+      "browseCatalogue": "Parcourir le catalogue"
+    },
+    "success": {
+      "titlePaid": "Réservation confirmée",
+      "titlePending": "Réservation en attente",
+      "titleAuthorized": "Réservation autorisée",
+      "messagePaid": "Votre réservation a été payée et confirmée.",
+      "messagePending": "Nous traitons votre paiement.",
+      "verifying": "Vérification du paiement…",
+      "bookingDetails": "Détails de la réservation",
+      "invoiceDetails": "Détails de la facture",
+      "invoiceNumber": "Numéro de facture",
+      "amount": "Montant",
+      "status": "Statut",
+      "paidAt": "Payé le",
+      "viewBookings": "Voir les réservations"
+    }
   }
 }

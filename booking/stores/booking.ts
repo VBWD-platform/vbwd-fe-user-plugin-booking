@@ -154,6 +154,7 @@ export const useBookingStore = defineStore('booking', () => {
     quantity?: number;
     custom_fields?: Record<string, unknown>;
     notes?: string;
+    coupon_code?: string | null;
   }): Promise<{ invoice_id: string; invoice_number: string }> {
     return await api.post('/booking/checkout', data) as { invoice_id: string; invoice_number: string };
   }

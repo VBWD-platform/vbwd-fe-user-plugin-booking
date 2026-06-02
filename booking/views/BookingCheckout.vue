@@ -105,22 +105,50 @@
           </div>
         </div>
 
+        <CouponInput
+          v-if="grossTotal > 0"
+          class="checkout-coupon"
+          :applied-code="couponCode"
+          :error="couponError"
+          :loading="couponLoading"
+          @apply="onApplyCoupon"
+          @clear="onClearCoupon"
+        />
+
         <!-- Total -->
-        <div class="total">
-          <strong>{{ $t('booking.checkout.total') }}: {{ resource.price }} {{ resource.currency }}</strong>
+        <div
+          class="total"
+          data-testid="order-total"
+        >
+          <strong data-testid="order-total-amount">
+            {{ discountAmount > 0 ? 'Final price with coupon:' : ($t('booking.checkout.total') + ':') }}
+            {{ netTotal.toFixed(2) }} {{ resource.currency }}
+          </strong>
+          <div
+            v-if="discountAmount > 0"
+            class="order-saved"
+            data-testid="order-discount"
+          >
+            You have saved: {{ discountAmount.toFixed(2) }} {{ resource.currency }}
+          </div>
         </div>
       </div>
 
-      <!-- Step 2: Billing Address -->
+      <!-- Step 2: Billing Address (collected whenever there's a gross price) -->
       <BillingAddressBlock
+        v-if="hasPayableTotal"
         :key="isAuthenticated ? 'auth' : 'anon'"
         class="card"
         @valid="handleBillingAddressValid"
       />
 
-      <!-- Step 3: Payment Methods -->
+      <!-- Step 3: Payment Methods. Pass the net amount + currency so the
+           token-balance method can render its live quote panel here. -->
       <PaymentMethodsBlock
+        v-if="!isPayZero"
         class="card"
+        :amount="netTotal"
+        :currency="resource.currency || 'EUR'"
         @selected="handlePaymentMethodSelected"
       />
 
@@ -156,7 +184,15 @@
           :disabled="!canPay"
           @click="handlePay"
         >
-          {{ paying ? $t('booking.checkout.processing') : $t('booking.checkout.payNow') + ' ' + resource.price + ' ' + resource.currency }}
+          <template v-if="paying">
+            {{ $t('booking.checkout.processing') }}
+          </template>
+          <template v-else-if="isPayZero">
+            {{ $t('booking.checkout.confirmFree') }}
+          </template>
+          <template v-else>
+            {{ $t('booking.checkout.payNow') + ' ' + netTotal.toFixed(2) + ' ' + resource.currency }}
+          </template>
         </button>
       </div>
 
@@ -174,7 +210,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { isAuthenticated as checkAuth } from '@/api';
+import { api, isAuthenticated as checkAuth } from '@/api';
+import { CouponInput, isZeroTotal } from 'vbwd-view-component';
+import { getCheckoutPaymentMethod } from '@/registries/checkoutPaymentMethods';
 import EmailBlock from '@/components/checkout/EmailBlock.vue';
 import PaymentMethodsBlock from '@/components/checkout/PaymentMethodsBlock.vue';
 import TermsCheckbox from '@/components/checkout/TermsCheckbox.vue';
@@ -202,10 +240,52 @@ const bookingData = computed(() => store.pendingCheckout);
 const resource = computed(() => store.currentResource);
 const invoiceId = ref<string | null>(null);
 
+// Coupon state (BOOKING scope).
+const couponCode = ref<string | null>(null);
+const discountAmount = ref(0);
+const couponError = ref<string | null>(null);
+const couponLoading = ref(false);
+const grossTotal = computed(
+  () => Number(resource.value?.price || 0) * Number(bookingData.value?.quantity || 1),
+);
+const netTotal = computed(() => Math.max(0, grossTotal.value - discountAmount.value));
+async function onApplyCoupon(code: string): Promise<void> {
+  if (!resource.value) return;
+  couponLoading.value = true;
+  couponError.value = null;
+  try {
+    const r = await api.post('/coupons/validate', {
+      code,
+      cart_total: grossTotal.value,
+      scope: 'BOOKING',
+    }) as { valid: boolean; discount_amount?: string; error?: string };
+    if (r.valid) {
+      discountAmount.value = Number(r.discount_amount || 0);
+      couponCode.value = code;
+    } else {
+      discountAmount.value = 0;
+      couponCode.value = null;
+      couponError.value = r.error || 'Invalid coupon';
+    }
+  } finally {
+    couponLoading.value = false;
+  }
+}
+function onClearCoupon(): void {
+  discountAmount.value = 0;
+  couponCode.value = null;
+  couponError.value = null;
+}
+
+// Gross (pre-discount) drives coupon-input + billing visibility; Pay Zero keys
+// off the NET total (€0 resource, or a 100%-off coupon → nothing to charge).
+const hasPayableTotal = computed(() => grossTotal.value > 0);
+const isPayZero = computed(() => isZeroTotal(netTotal.value));
+
 const canPay = computed(() =>
   isAuthenticated.value &&
-  selectedPaymentMethod.value &&
-  billingAddressValid.value &&
+  (isPayZero.value || !!selectedPaymentMethod.value) &&
+  (!hasPayableTotal.value || billingAddressValid.value) &&
   termsAccepted.value &&
   !paying.value
 );
@@ -213,8 +293,8 @@ const canPay = computed(() =>
 const missingRequirements = computed(() => {
   const reqs: string[] = [];
   if (!isAuthenticated.value) reqs.push('Please log in or create an account');
-  if (!selectedPaymentMethod.value) reqs.push('Select a payment method');
-  if (!billingAddressValid.value) reqs.push('Enter billing address');
+  if (!isPayZero.value && !selectedPaymentMethod.value) reqs.push('Select a payment method');
+  if (hasPayableTotal.value && !billingAddressValid.value) reqs.push('Enter billing address');
   if (!termsAccepted.value) reqs.push('Accept the terms and conditions');
   return reqs;
 });
@@ -251,19 +331,40 @@ async function handlePay() {
   try {
     // Create invoice via checkout API (user is authenticated at this point)
     if (!invoiceId.value) {
-      const result = await store.checkout(bookingData.value);
+      const result = await store.checkout({
+        ...bookingData.value,
+        coupon_code: couponCode.value,
+      });
       invoiceId.value = result.invoice_id;
     }
 
-    if (invoiceId.value && selectedPaymentMethod.value) {
-      const method = selectedPaymentMethod.value;
-      if (method === 'stripe' || method === 'paypal' || method === 'yookassa') {
+    if (invoiceId.value && isPayZero.value) {
+      // Pay Zero — the backend captured the €0 invoice on checkout (PAID +
+      // booking created). No payment method needed; go to confirmation.
+      router.push({
+        path: '/checkout/confirmation',
+        query: { invoice_id: invoiceId.value },
+      });
+    } else if (invoiceId.value && selectedPaymentMethod.value) {
+      // Agnostic post-checkout dispatch (same as the subscription/public
+      // checkout): the registered entry for the method decides what happens.
+      //   instantPay  → charge in-band now (e.g. token balance → mark PAID)
+      //   redirectPath → hop to the gateway's /pay/<name> page (stripe/…)
+      //   nothing      → straight to confirmation
+      const entry = getCheckoutPaymentMethod(selectedPaymentMethod.value);
+      if (entry?.instantPay) {
+        try {
+          await entry.instantPay(invoiceId.value);
+        } catch (err) {
+          console.warn('[booking] instantPay failed', err);
+        }
         router.push({
-          path: `/pay/${method}`,
-          query: { invoice: invoiceId.value },
+          path: '/checkout/confirmation',
+          query: { invoice_id: invoiceId.value },
         });
+      } else if (entry?.redirectPath) {
+        router.push(entry.redirectPath(invoiceId.value));
       } else {
-        // Basic/invoice — go straight to confirmation
         router.push({
           path: '/checkout/confirmation',
           query: { invoice_id: invoiceId.value },
@@ -319,7 +420,9 @@ h1 { margin-bottom: 30px; color: #2c3e50; }
 .booking-detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f8f9fa; font-size: 0.95rem; }
 .booking-detail-row span:first-child { color: #6b7280; font-weight: 500; }
 
+.checkout-coupon { margin: 16px 0; }
 .total { margin-top: 15px; padding-top: 15px; border-top: 2px solid #eee; font-size: 1.2rem; text-align: right; }
+.order-saved { margin-top: 4px; font-size: 0.85rem; font-weight: 500; color: var(--vbwd-success, #047857); }
 
 .checkout-actions { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding-top: 10px; }
 

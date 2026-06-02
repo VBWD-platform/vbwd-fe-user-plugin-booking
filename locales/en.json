@@ -87,6 +87,7 @@
       "termsLabel": "I agree to the terms and conditions and confirm this booking",
       "requirementsTitle": "Before you can pay:",
       "payNow": "Pay Now",
+      "confirmFree": "Confirm Free Booking",
       "processing": "Processing...",
       "bookingNotFound": "Booking not found.",
       "additionalInfo": "Additional information"

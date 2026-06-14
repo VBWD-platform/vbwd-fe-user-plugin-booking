@@ -55,12 +55,20 @@
               >{{ invoiceStatus }}</span>
             </span>
           </div>
+          <!-- S85.4 totals-level tax disclosure from persisted invoice fields
+               (no fe-side tax math; tampered tax_amount shows verbatim). Per-rate
+               tax lines need S85.2 line-item tax persistence. -->
           <div
             v-if="invoice.amount"
             class="confirmation-row"
           >
             <span class="confirmation-label">{{ $t('booking.success.amount') }}</span>
-            <span class="confirmation-value"><strong>{{ invoice.amount }} {{ invoice.currency }}</strong></span>
+            <span class="confirmation-value">
+              <PriceBreakdown
+                data-testid="booking-breakdown"
+                :price="invoiceBreakdownPrice"
+              />
+            </span>
           </div>
           <div
             v-if="invoice.paid_at"
@@ -153,6 +161,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { api } from '@/api';
+import PriceBreakdown from '@/components/PriceBreakdown.vue';
+import type { PriceVO } from '@/utils/priceDisplay';
 
 const route = useRoute();
 const loading = ref(true);
@@ -165,6 +175,22 @@ const bookingMeta = ref<Record<string, unknown>>({});
 
 const invoiceId = computed(() => route.query.invoice_id as string || route.query.invoice as string || '');
 const invoiceStatus = computed(() => ((invoice.value?.status as string) || 'pending').toLowerCase());
+
+// Totals-level Price VO from persisted invoice fields — no fe-side tax math.
+// ``brutto`` = total_amount (fallback amount); ``netto`` = subtotal (fallback
+// gross); single aggregate tax line from tax_amount.
+const invoiceBreakdownPrice = computed<PriceVO>(() => {
+  const current = invoice.value || {};
+  const gross = Number(current.total_amount ?? current.amount ?? 0);
+  const net = current.subtotal !== undefined ? Number(current.subtotal) : gross;
+  const tax = current.tax_amount !== undefined ? Number(current.tax_amount) : 0;
+  return {
+    netto: net,
+    taxes: tax > 0 ? [{ code: 'TAX', rate: 0, amount: tax }] : [],
+    brutto: gross,
+    currency: (current.currency as string) || 'USD',
+  };
+});
 
 function formatDate(dateString: unknown): string {
   if (!dateString || typeof dateString !== 'string') return '';

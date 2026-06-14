@@ -61,7 +61,10 @@
               >
                 {{ resource.name }}
               </router-link>
-              <span class="booking-resource-price">{{ resource.price }} {{ resource.currency }}</span>
+              <span
+                class="booking-resource-price"
+                data-testid="resource-price"
+              >{{ formatMoney(Number(resource.price), { currency }) }}</span>
             </div>
             <p class="plan-description">
               {{ resource.resource_type }}
@@ -122,14 +125,14 @@
         >
           <strong data-testid="order-total-amount">
             {{ discountAmount > 0 ? 'Final price with coupon:' : ($t('booking.checkout.total') + ':') }}
-            {{ netTotal.toFixed(2) }} {{ resource.currency }}
+            {{ formatMoney(netTotal, { currency }) }}
           </strong>
           <div
             v-if="discountAmount > 0"
             class="order-saved"
             data-testid="order-discount"
           >
-            You have saved: {{ discountAmount.toFixed(2) }} {{ resource.currency }}
+            You have saved: {{ formatMoney(discountAmount, { currency }) }}
           </div>
         </div>
       </div>
@@ -148,7 +151,7 @@
         v-if="!isPayZero"
         class="card"
         :amount="netTotal"
-        :currency="resource.currency || 'EUR'"
+        :currency="currency"
         @selected="handlePaymentMethodSelected"
       />
 
@@ -191,7 +194,7 @@
             {{ $t('booking.checkout.confirmFree') }}
           </template>
           <template v-else>
-            {{ $t('booking.checkout.payNow') + ' ' + netTotal.toFixed(2) + ' ' + resource.currency }}
+            {{ $t('booking.checkout.payNow') + ' ' + formatMoney(netTotal, { currency }) }}
           </template>
         </button>
       </div>
@@ -211,16 +214,22 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { api, isAuthenticated as checkAuth } from '@/api';
-import { CouponInput, isZeroTotal } from 'vbwd-view-component';
+import { CouponInput, isZeroTotal, formatMoney } from 'vbwd-view-component';
 import { getCheckoutPaymentMethod } from '@/registries/checkoutPaymentMethods';
 import EmailBlock from '@/components/checkout/EmailBlock.vue';
 import PaymentMethodsBlock from '@/components/checkout/PaymentMethodsBlock.vue';
 import TermsCheckbox from '@/components/checkout/TermsCheckbox.vue';
 import BillingAddressBlock from '@/components/checkout/BillingAddressBlock.vue';
+import { useAppConfigStore } from '@/stores/appConfig';
 import { useBookingStore } from '../stores/booking';
 
 const router = useRouter();
 const store = useBookingStore();
+const appConfig = useAppConfigStore();
+
+// S85.1 dropped `currency` from `booking_resource`, so the operating currency is
+// now the global default (S93) — never `resource.currency` (undefined).
+const currency = computed(() => appConfig.defaultCurrency);
 
 const loading = ref(true);
 const paying = ref(false);
@@ -379,6 +388,8 @@ async function handlePay() {
 }
 
 onMounted(async () => {
+  // Load the global operating currency before the summary renders.
+  await appConfig.load();
   try {
     if (!store.pendingCheckout) {
       loading.value = false;

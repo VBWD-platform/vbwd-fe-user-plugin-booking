@@ -81,7 +81,15 @@
           >{{ resource.description }}</span>
         </div>
         <div class="booking-card-meta">
-          <span class="booking-price">{{ resource.price }} {{ resource.currency }} / {{ resource.price_unit.replace('per_', '') }}</span>
+          <span class="booking-price">
+            <PriceDisplay
+              :effective-display-mode="resource.pricing?.effective_display_mode"
+              :global-mode="resource.pricing?.prices_display_mode"
+              :net-amount="resource.pricing?.net_amount ?? resource.price"
+              :gross-amount="resource.pricing?.gross_amount ?? resource.price"
+              :currency="resource.currency"
+            /> / {{ resource.price_unit.replace('per_', '') }}
+          </span>
           <span
             v-if="resource.capacity > 1"
             class="ghrm-pkg-downloads"
@@ -95,6 +103,7 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue';
 import { useBookingStore } from '../stores/booking';
+import PriceDisplay from '@/components/PriceDisplay.vue';
 
 const store = useBookingStore();
 const selectedCategory = ref<string | null>(null);

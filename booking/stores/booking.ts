@@ -25,6 +25,18 @@ export interface BookableResource {
   image_url: string | null;
   images: Array<{ id: string; url?: string; alt?: string; is_primary: boolean; sort_order: number }>;
   categories: Array<{ id: string; name: string; slug: string }>;
+  // S72.4 netto/brutto display (present on the resource-detail payload)
+  pricing?: {
+    net_amount: string;
+    gross_amount: string;
+    effective_display_mode?: 'netto' | 'brutto';
+    prices_display_mode?: 'netto' | 'brutto';
+  };
+  // S77 — generic core tags / custom fields appended by the backend serializer
+  // (distinct from the booking `custom_fields_schema` form fields).
+  tags?: string[];
+  custom_fields?: Record<string, unknown>;
+  custom_field_defs?: import('vbwd-view-component').CustomFieldDef[];
 }
 
 export interface AvailableSlot {

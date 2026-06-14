@@ -62,7 +62,13 @@
           </p>
           <div class="ghrm-detail-badges">
             <span class="ghrm-badge ghrm-badge--version">
-              {{ resource.price }} {{ resource.currency }} / {{ resource.price_unit.replace('per_', '') }}
+              <PriceDisplay
+                :effective-display-mode="resource.pricing?.effective_display_mode"
+                :global-mode="resource.pricing?.prices_display_mode"
+                :net-amount="resource.pricing?.net_amount ?? resource.price"
+                :gross-amount="resource.pricing?.gross_amount ?? resource.price"
+                :currency="resource.currency"
+              /> / {{ resource.price_unit.replace('per_', '') }}
             </span>
             <span
               v-if="resource.capacity > 1"
@@ -88,6 +94,23 @@
       >
         {{ resource.description }}
       </p>
+
+      <!-- S77 — tags + custom fields from the serialized payload (no extra fetch) -->
+      <div
+        v-if="hasTagsOrCustomFields"
+        class="booking-tags-custom-fields"
+        data-testid="resource-tags-custom-fields"
+      >
+        <TagChips
+          v-if="resource.tags && resource.tags.length"
+          :tags="resource.tags"
+        />
+        <CustomFieldsDisplay
+          v-if="resource.custom_fields"
+          :custom-fields="resource.custom_fields"
+          :field-defs="resource.custom_field_defs"
+        />
+      </div>
 
       <!-- Availability section — pick date + slot, then Book Now -->
       <div class="ghrm-features">
@@ -186,6 +209,8 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useBookingStore } from '../stores/booking';
 import { bookingConfig } from '../bookingConfig';
+import PriceDisplay from '@/components/PriceDisplay.vue';
+import { TagChips, CustomFieldsDisplay } from 'vbwd-view-component';
 
 const route = useRoute();
 const router = useRouter();
@@ -201,6 +226,15 @@ const activeImageUrl = ref('');
 
 const todayString = computed(() => new Date().toISOString().split('T')[0]);
 const isFlexibleDuration = computed(() => resource.value && resource.value.slot_duration_minutes === null);
+
+// S77 — only render the tags / custom-fields block when there is content.
+const hasTagsOrCustomFields = computed(() => {
+  const current = resource.value;
+  if (!current) return false;
+  const hasTags = Array.isArray(current.tags) && current.tags.length > 0;
+  const hasFields = !!current.custom_fields && Object.keys(current.custom_fields).length > 0;
+  return hasTags || hasFields;
+});
 
 const selectedSlot = computed(() => {
   if (selectedSlotIndex.value === null) return null;

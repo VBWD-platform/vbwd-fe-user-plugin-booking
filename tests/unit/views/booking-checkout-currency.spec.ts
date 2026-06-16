@@ -27,6 +27,13 @@ vi.mock('@/registries/checkoutPaymentMethods', () => ({
   getCheckoutPaymentMethod: vi.fn(() => undefined),
 }));
 
+// Keep the real fe-core helpers and only stub the auth store so the view's
+// <PriceDisplay> resolves an anonymous viewer without a fe-core Pinia install.
+vi.mock('vbwd-view-component', async () => {
+  const actual = await vi.importActual<Record<string, unknown>>('vbwd-view-component');
+  return { ...actual, useAuthStore: () => ({ user: null }) };
+});
+
 const i18n = createI18n({
   legacy: false,
   locale: 'en',

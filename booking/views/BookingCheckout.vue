@@ -64,7 +64,17 @@
               <span
                 class="booking-resource-price"
                 data-testid="resource-price"
-              >{{ formatMoney(Number(resource.price), { currency }) }}</span>
+              >
+                <PriceDisplay
+                  :net-amount="resourceNetAmount"
+                  :gross-amount="resourceGrossAmount"
+                  :effective-display-mode="resource.pricing?.effective_display_mode"
+                  :global-mode="appConfig.pricesDisplayMode"
+                  :currency="currency"
+                  :account-type="authStore.user?.account_type"
+                />
+                <template v-if="quantity > 1"> x{{ quantity }}</template>
+              </span>
             </div>
             <p class="plan-description">
               {{ resource.resource_type }}
@@ -75,6 +85,17 @@
             >
               {{ resource.description }}
             </p>
+            <!-- Per-rate tax disclosure for the resource line, only in the
+                 HETEROGENEOUS case (the resource carries more than one tax
+                 rate). The single-rate case is covered once by the order-level
+                 <OrderTaxSummary> below, so we omit it here to avoid a duplicate
+                 (same gating as shop/subscription). -->
+            <PriceBreakdown
+              v-if="isHeterogeneous && orderPrice.taxes.length > 0"
+              :price="orderPrice"
+              class="line-breakdown"
+              data-testid="resource-line-breakdown"
+            />
           </div>
         </div>
 
@@ -118,6 +139,14 @@
           @clear="onClearCoupon"
         />
 
+        <!-- Order-level tax breakdown (net / total taxes / brutto), just before
+             the Total. Renders only when the order carries taxes. -->
+        <OrderTaxSummary
+          v-if="orderPrice.taxes.length > 0"
+          :price="orderPrice"
+          class="checkout-tax-summary"
+        />
+
         <!-- Total -->
         <div
           class="total"
@@ -125,7 +154,7 @@
         >
           <strong data-testid="order-total-amount">
             {{ discountAmount > 0 ? 'Final price with coupon:' : ($t('booking.checkout.total') + ':') }}
-            {{ formatMoney(netTotal, { currency }) }}
+            {{ formatMoney(amountToCharge, { currency }) }}
           </strong>
           <div
             v-if="discountAmount > 0"
@@ -145,12 +174,12 @@
         @valid="handleBillingAddressValid"
       />
 
-      <!-- Step 3: Payment Methods. Pass the net amount + currency so the
-           token-balance method can render its live quote panel here. -->
+      <!-- Step 3: Payment Methods. Pass the brutto charge amount + currency so
+           the token-balance method can render its live quote panel here. -->
       <PaymentMethodsBlock
         v-if="!isPayZero"
         class="card"
-        :amount="netTotal"
+        :amount="amountToCharge"
         :currency="currency"
         @selected="handlePaymentMethodSelected"
       />
@@ -194,7 +223,7 @@
             {{ $t('booking.checkout.confirmFree') }}
           </template>
           <template v-else>
-            {{ $t('booking.checkout.payNow') + ' ' + formatMoney(netTotal, { currency }) }}
+            {{ $t('booking.checkout.payNow') + ' ' + formatMoney(amountToCharge, { currency }) }}
           </template>
         </button>
       </div>
@@ -214,18 +243,23 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { api, isAuthenticated as checkAuth } from '@/api';
-import { CouponInput, isZeroTotal, formatMoney } from 'vbwd-view-component';
+import { CouponInput, isZeroTotal, formatMoney, useAuthStore } from 'vbwd-view-component';
 import { getCheckoutPaymentMethod } from '@/registries/checkoutPaymentMethods';
 import EmailBlock from '@/components/checkout/EmailBlock.vue';
 import PaymentMethodsBlock from '@/components/checkout/PaymentMethodsBlock.vue';
 import TermsCheckbox from '@/components/checkout/TermsCheckbox.vue';
 import BillingAddressBlock from '@/components/checkout/BillingAddressBlock.vue';
+import PriceDisplay from '@/components/PriceDisplay.vue';
+import PriceBreakdown from '@/components/PriceBreakdown.vue';
+import OrderTaxSummary from '@/components/OrderTaxSummary.vue';
 import { useAppConfigStore } from '@/stores/appConfig';
 import { useBookingStore } from '../stores/booking';
+import { getBookingTaxBreakdown } from '../checkoutSource';
 
 const router = useRouter();
 const store = useBookingStore();
 const appConfig = useAppConfigStore();
+const authStore = useAuthStore();
 
 // S85.1 dropped `currency` from `booking_resource`, so the operating currency is
 // now the global default (S93) — never `resource.currency` (undefined).
@@ -254,10 +288,37 @@ const couponCode = ref<string | null>(null);
 const discountAmount = ref(0);
 const couponError = ref<string | null>(null);
 const couponLoading = ref(false);
-const grossTotal = computed(
-  () => Number(resource.value?.price || 0) * Number(bookingData.value?.quantity || 1),
+const quantity = computed(() => Number(bookingData.value?.quantity || 1));
+
+// Per-unit net/gross fed to <PriceDisplay> (the business overlay flips the
+// side). Fall back to the bare ``price`` (net == gross) when the resource has
+// no computed ``pricing`` block.
+const resourceNetAmount = computed(() =>
+  Number(resource.value?.pricing?.net_amount ?? resource.value?.price ?? 0),
 );
-const netTotal = computed(() => Math.max(0, grossTotal.value - discountAmount.value));
+const resourceGrossAmount = computed(() =>
+  Number(resource.value?.pricing?.gross_amount ?? resource.value?.price ?? 0),
+);
+
+// Order-level net/per-rate-tax/brutto VO for the resource × quantity, built by
+// the shared aggregator from the resource ``pricing`` block (display only — no
+// tax math). Mirrors shop's CheckoutSource.getTaxBreakdown().
+const orderPrice = computed(() =>
+  getBookingTaxBreakdown(resource.value, quantity.value, currency.value),
+);
+
+// Heterogeneous = the resource carries more than one distinct tax rate. Only
+// then does the per-line breakdown render; the single-rate case is shown once
+// by the order-level <OrderTaxSummary> (same gating as shop/subscription).
+const isHeterogeneous = computed(() => orderPrice.value.taxes.length > 1);
+
+// The brutto order total (gross × quantity) before any coupon.
+const grossTotal = computed(() => orderPrice.value.brutto);
+
+// The amount actually charged: the brutto total minus any applied coupon
+// discount (D8 — the charge is always the brutto). Renamed from the misleading
+// ``netTotal``, which named the charged figure as if it were net.
+const amountToCharge = computed(() => Math.max(0, grossTotal.value - discountAmount.value));
 async function onApplyCoupon(code: string): Promise<void> {
   if (!resource.value) return;
   couponLoading.value = true;
@@ -289,7 +350,7 @@ function onClearCoupon(): void {
 // Gross (pre-discount) drives coupon-input + billing visibility; Pay Zero keys
 // off the NET total (€0 resource, or a 100%-off coupon → nothing to charge).
 const hasPayableTotal = computed(() => grossTotal.value > 0);
-const isPayZero = computed(() => isZeroTotal(netTotal.value));
+const isPayZero = computed(() => isZeroTotal(amountToCharge.value));
 
 const canPay = computed(() =>
   isAuthenticated.value &&

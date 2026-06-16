@@ -26,9 +26,15 @@ export interface BookableResource {
   images: Array<{ id: string; url?: string; alt?: string; is_primary: boolean; sort_order: number }>;
   categories: Array<{ id: string; name: string; slug: string }>;
   // S72.4 netto/brutto display (present on the resource-detail payload)
+  // S96.3 — the same block also carries the per-rate ``taxes`` array (code /
+  // rate / amount) from ``build_pricing_block``, so checkout can disclose the
+  // tax split without recomputing anything.
   pricing?: {
     net_amount: string;
     gross_amount: string;
+    tax_amount?: string;
+    tax_rate?: string;
+    taxes?: Array<{ code: string; name?: string; rate: string; amount: string }>;
     effective_display_mode?: 'netto' | 'brutto';
     prices_display_mode?: 'netto' | 'brutto';
   };

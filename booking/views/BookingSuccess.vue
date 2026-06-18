@@ -161,10 +161,12 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { api } from '@/api';
+import { useAppConfigStore } from '@/stores/appConfig';
 import PriceBreakdown from '@/components/PriceBreakdown.vue';
 import type { PriceVO } from '@/utils/priceDisplay';
 
 const route = useRoute();
+const appConfig = useAppConfigStore();
 const loading = ref(true);
 const invoice = ref<Record<string, unknown> | null>(null);
 const bookingResource = ref<{
@@ -188,7 +190,8 @@ const invoiceBreakdownPrice = computed<PriceVO>(() => {
     netto: net,
     taxes: tax > 0 ? [{ code: 'TAX', rate: 0, amount: tax }] : [],
     brutto: gross,
-    currency: (current.currency as string) || 'USD',
+    // The invoice's own stored currency, else the billing default (S99).
+    currency: (current.currency as string) || appConfig.defaultCurrency,
   };
 });
 

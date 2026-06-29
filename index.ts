@@ -11,7 +11,7 @@ import zh from './locales/zh.json';
 
 export const bookingPlugin: IPlugin = {
   name: 'booking',
-  version: '26.6',
+  version: '26.6.1',
 
   install(sdk: IPlatformSDK) {
     // Translations

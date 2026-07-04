@@ -11,6 +11,7 @@ import zh from './locales/zh.json';
 
 export const bookingPlugin: IPlugin = {
   name: 'booking',
+  description: 'Booking user surface plugin (Fe-User)',
   version: '26.6.1',
 
   install(sdk: IPlatformSDK) {

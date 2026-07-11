@@ -5,15 +5,23 @@
  * by the per-item ``pricing`` block (net_amount/gross_amount + effective/global
  * display modes) embedded by the list endpoint. These oracle tests assert the
  * net-vs-gross choice and the "netto price" tag for the three modes, plus a
- * graceful fallback when an (older-cached) resource has no ``pricing`` block —
- * using the real catalogue component + a stubbed store.
+ * graceful fallback when an (older-cached) resource has no ``pricing`` block.
+ *
+ * Since the catalogue was rewritten to consume the shared fe-core catalogue
+ * mechanism (useCatalogueFilters + CatalogueFilterBar), the cards flow from the
+ * ``items`` envelope of ``GET /booking/resources`` — so this harness feeds them
+ * through the api mock + a real memory router (the composable reads the URL).
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mount, flushPromises, RouterLinkStub } from '@vue/test-utils';
 import { setActivePinia, createPinia } from 'pinia';
 import { createI18n } from 'vue-i18n';
+import { createRouter, createMemoryHistory } from 'vue-router';
+import { api } from '@/api';
 import BookingCatalogue from '../../../booking/views/BookingCatalogue.vue';
-import { useBookingStore, type BookableResource } from '../../../booking/stores/booking';
+import type { BookableResource } from '../../../booking/stores/booking';
+
+vi.mock('@/api', () => ({ api: { get: vi.fn(), post: vi.fn() } }));
 
 const i18n = createI18n({
   legacy: false,
@@ -44,15 +52,28 @@ function makeResource(slug: string, pricing?: BookableResource['pricing']): Book
   };
 }
 
+function envelope(items: BookableResource[]) {
+  return { items, total: items.length, page: 1, per_page: 12, pages: 1 };
+}
+
 async function mountWithResources(resources: BookableResource[]) {
-  const store = useBookingStore();
-  store.resources = resources;
-  store.categories = [];
-  vi.spyOn(store, 'fetchResources').mockResolvedValue(undefined as never);
-  vi.spyOn(store, 'fetchCategories').mockResolvedValue(undefined as never);
+  vi.mocked(api.get).mockImplementation((url: string) => {
+    if (url.startsWith('/booking/filters')) return Promise.resolve({ facets: [] });
+    if (url.startsWith('/booking/resources')) return Promise.resolve(envelope(resources));
+    return Promise.resolve({});
+  });
+  const router = createRouter({
+    history: createMemoryHistory(),
+    routes: [
+      { path: '/booking', name: 'booking-catalogue', component: { template: '<div/>' } },
+      { path: '/booking/:slug', name: 'booking-resource', component: { template: '<div/>' } },
+    ],
+  });
+  router.push('/booking');
+  await router.isReady();
   const wrapper = mount(BookingCatalogue, {
     global: {
-      plugins: [i18n],
+      plugins: [i18n, router],
       stubs: { RouterLink: RouterLinkStub },
     },
   });
@@ -63,6 +84,7 @@ async function mountWithResources(resources: BookableResource[]) {
 describe('BookingCatalogue card price display (S72.4 follow-up)', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
+    vi.clearAllMocks();
   });
 
   it('shows the NET amount + netto tag for a netto card under a brutto global', async () => {

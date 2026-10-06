@@ -36,7 +36,11 @@ async function installAndCollectPaths(): Promise<string[]> {
 }
 
 describe('booking runtime config (S152 16b)', () => {
-  afterEach(() => {
+  afterEach(async () => {
+    // install() fires un-awaited dynamic imports (confirmation-registry and CMS
+    // widget registration load the booking views, which import @/api). Let them
+    // finish inside the test environment, not after its teardown.
+    await vi.dynamicImportSettled();
     vi.unstubAllGlobals();
   });
 

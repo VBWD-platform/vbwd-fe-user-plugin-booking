@@ -26,7 +26,7 @@ const i18n = createI18n({
 function makeResource(overrides: Partial<BookableResource>): BookableResource {
   return {
     id: 'res-1', name: 'Room A', slug: 'room-a', description: 'A room', resource_type: 'room',
-    capacity: 1, slot_duration_minutes: 60, price: '100.00', currency: 'EUR',
+    capacity: 1, slot_duration_minutes: 60, price: '100.00',
     price_unit: 'per_hour', availability: {}, custom_fields_schema: null, image_url: null,
     images: [], categories: [],
     pricing: { net_amount: '100.00', gross_amount: '119.00' },

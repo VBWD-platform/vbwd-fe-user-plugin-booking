@@ -142,12 +142,16 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useBookingStore } from '../stores/booking';
+import { useAppConfigStore } from '@/stores/appConfig';
 import { downloadAuthenticatedFile } from '../utils/download';
 import BookingCancelModal from '../components/BookingCancelModal.vue';
 
 const route = useRoute();
 const { t, locale } = useI18n();
 const store = useBookingStore();
+// S85.1 dropped `currency` from the resource; prices show in the operating
+// currency (the global default, as BookingCheckout).
+const appConfig = useAppConfigStore();
 
 const cancelModalOpen = ref(false);
 const cancelling = ref(false);
@@ -196,7 +200,7 @@ const durationDisplay = computed(() => {
 const priceDisplay = computed(() => {
   const resource = booking.value?.resource;
   if (!resource?.price) return '';
-  return `${resource.price} ${resource.currency}`;
+  return `${resource.price} ${appConfig.defaultCurrency}`;
 });
 
 const canModify = computed(() => store.canCancelOrReschedule(booking.value));

@@ -16,6 +16,8 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mount, flushPromises, RouterLinkStub } from '@vue/test-utils';
 import { setActivePinia, createPinia } from 'pinia';
 import { createI18n } from 'vue-i18n';
+import PriceDisplay from '@/components/PriceDisplay.vue';
+import { useAppConfigStore } from '@/stores/appConfig';
 import { createRouter, createMemoryHistory } from 'vue-router';
 import { api } from '@/api';
 import BookingCatalogue from '../../../booking/views/BookingCatalogue.vue';
@@ -41,7 +43,6 @@ function makeResource(slug: string, pricing?: BookableResource['pricing']): Book
     capacity: 1,
     slot_duration_minutes: 60,
     price: '100.00',
-    currency: 'EUR',
     price_unit: 'per_hour',
     availability: {},
     custom_fields_schema: null,
@@ -122,5 +123,13 @@ describe('BookingCatalogue card price display (S72.4 follow-up)', () => {
     const amount = wrapper.get('[data-testid="price-amount"]').text();
     expect(amount).toContain('100');
     expect(wrapper.find('[data-testid="price-netto-tag"]').exists()).toBe(false);
+  });
+  // S152 16b — S85.1 dropped `currency` from the resource payload; the price is
+  // shown in the operating currency (as BookingCheckout), never `undefined`.
+  it('passes the operating currency to PriceDisplay', async () => {
+    const wrapper = await mountWithResources([makeResource('no-pricing')]);
+    const currency = wrapper.findComponent(PriceDisplay).props('currency');
+    expect(currency).toBe(useAppConfigStore().defaultCurrency);
+    expect(currency).toBeTruthy();
   });
 });

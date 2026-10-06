@@ -112,7 +112,7 @@
               :global-mode="resource.pricing?.prices_display_mode"
               :net-amount="resource.pricing?.net_amount ?? resource.price"
               :gross-amount="resource.pricing?.gross_amount ?? resource.price"
-              :currency="resource.currency"
+              :currency="appConfig.defaultCurrency"
             /> / {{ resource.price_unit.replace('per_', '') }}
           </span>
           <span
@@ -156,6 +156,7 @@ import { useCatalogueFilters, CatalogueFilterBar } from 'vbwd-view-component';
 import type { FacetDescriptor, FacetOption } from 'vbwd-view-component';
 import { api } from '@/api';
 import PriceDisplay from '@/components/PriceDisplay.vue';
+import { useAppConfigStore } from '@/stores/appConfig';
 import type { BookableResource } from '../stores/booking';
 
 interface CatalogueEnvelope {
@@ -176,6 +177,9 @@ const DEFAULT_PER_PAGE = 12;
 const API_PREFIX = '/api/v1';
 
 const route = useRoute();
+// S85.1 dropped `currency` from the resource; prices show in the operating
+// currency (the global default, as BookingCheckout).
+const appConfig = useAppConfigStore();
 const perPage = computed(() => props.items_per_page ?? DEFAULT_PER_PAGE);
 const filters = useCatalogueFilters({ perPage });
 

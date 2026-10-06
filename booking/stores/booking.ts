@@ -18,7 +18,8 @@ export interface BookableResource {
   capacity: number;
   slot_duration_minutes: number | null;
   price: string;
-  currency: string;
+  // No `currency`: S85.1 dropped it from the payload — price in the operating
+  // currency (`useAppConfigStore().defaultCurrency`).
   price_unit: string;
   availability: Record<string, unknown>;
   custom_fields_schema: Array<{ id: string; label: string; type: string; required: boolean }> | null;

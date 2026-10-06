@@ -26,7 +26,7 @@
             {{ $t('booking.form.bookTitle', { name: resource.name }) }}
           </h1>
           <p class="ghrm-detail-author">
-            {{ resource.resource_type }} · {{ resource.price }} {{ resource.currency }} / {{ resource.price_unit.replace('per_', '') }}
+            {{ resource.resource_type }} · {{ resource.price }} {{ appConfig.defaultCurrency }} / {{ resource.price_unit.replace('per_', '') }}
           </p>
         </div>
       </div>
@@ -131,10 +131,15 @@
 import { ref, computed, onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useBookingStore } from '../stores/booking';
+import { useAppConfigStore } from '@/stores/appConfig';
+import { slotClockTime } from '../utils/slotTime';
 
 const route = useRoute();
 const router = useRouter();
 const store = useBookingStore();
+// S85.1 dropped `currency` from the resource; the operating currency is the
+// global default (as BookingCheckout).
+const appConfig = useAppConfigStore();
 
 const resourceSlug = computed(() => route.params.slug as string);
 const resource = computed(() => store.currentResource);
@@ -145,8 +150,8 @@ const notes = ref('');
 // Read selected slot from query params (set by detail page)
 const selectedDate = computed(() => route.query.date as string || '');
 const selectedEndDate = computed(() => route.query.end_date as string || '');
-const slotStart = computed(() => route.query.start as string || '');
-const slotEnd = computed(() => route.query.end as string || '');
+const slotStart = computed(() => slotClockTime(route.query.start as string || ''));
+const slotEnd = computed(() => slotClockTime(route.query.end as string || ''));
 
 const isFlexibleDuration = computed(() =>
   resource.value && resource.value.slot_duration_minutes === null
@@ -163,7 +168,7 @@ function buildStartAt(): string {
   if (isFlexibleDuration.value) {
     return `${selectedDate.value}T14:00:00`;
   }
-  // slotStart is "09:00" format
+  // slotStart is normalised to "09:00" (the query may carry an ISO datetime)
   return `${selectedDate.value}T${slotStart.value}:00`;
 }
 

@@ -67,7 +67,7 @@
                 :global-mode="resource.pricing?.prices_display_mode"
                 :net-amount="resource.pricing?.net_amount ?? resource.price"
                 :gross-amount="resource.pricing?.gross_amount ?? resource.price"
-                :currency="resource.currency"
+                :currency="appConfig.defaultCurrency"
               /> / {{ resource.price_unit.replace('per_', '') }}
             </span>
             <span
@@ -209,12 +209,17 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useBookingStore } from '../stores/booking';
 import { bookingConfig } from '../bookingConfig';
+import { slotClockTime } from '../utils/slotTime';
 import PriceDisplay from '@/components/PriceDisplay.vue';
+import { useAppConfigStore } from '@/stores/appConfig';
 import { TagChips, CustomFieldsDisplay } from 'vbwd-view-component';
 
 const route = useRoute();
 const router = useRouter();
 const store = useBookingStore();
+// S85.1 dropped `currency` from the resource; prices show in the operating
+// currency (the global default, as BookingCheckout).
+const appConfig = useAppConfigStore();
 
 const selectedDate = ref('');
 const selectedEndDate = ref('');
@@ -250,10 +255,7 @@ const canProceed = computed(() => {
 
 function formatSlotTime(slot: { start?: string; end?: string; date?: string }) {
   if (slot.start && slot.end) {
-    // Handle both "09:00" and "2026-03-23T09:00:00" formats
-    const startTime = slot.start.includes('T') ? slot.start.slice(11, 16) : slot.start;
-    const endTime = slot.end.includes('T') ? slot.end.slice(11, 16) : slot.end;
-    return `${startTime} – ${endTime}`;
+    return `${slotClockTime(slot.start)} – ${slotClockTime(slot.end)}`;
   }
   if (slot.date) return slot.date;
   return '';

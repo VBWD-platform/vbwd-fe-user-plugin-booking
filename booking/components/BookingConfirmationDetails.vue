@@ -27,7 +27,7 @@
     </div>
 
     <div class="booking-price-info">
-      <span class="booking-price">{{ resource.price }} {{ resource.currency }}/{{ resource.price_unit }}</span>
+      <span class="booking-price">{{ resource.price }} {{ appConfig.defaultCurrency }}/{{ resource.price_unit }}</span>
     </div>
 
     <h3>{{ $t('booking.confirmation.bookingDetails') }}</h3>
@@ -78,6 +78,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useAppConfigStore } from '@/stores/appConfig';
 
 interface BookingResource {
   name: string;
@@ -85,7 +86,6 @@ interface BookingResource {
   description?: string;
   image_url?: string;
   price: string;
-  currency: string;
   price_unit: string;
   resource_type?: string;
 }
@@ -104,6 +104,10 @@ const props = defineProps<{
   invoiceId: string;
   invoiceData: Record<string, unknown> | null;
 }>();
+
+// S85.1 dropped `currency` from the resource; the price shows in the operating
+// currency (the global default, as BookingCheckout).
+const appConfig = useAppConfigStore();
 
 const bookingData = ref<BookingData | null>(null);
 const resource = ref<BookingResource | null>(null);

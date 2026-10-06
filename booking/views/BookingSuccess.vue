@@ -208,15 +208,16 @@ onMounted(async () => {
     const response = await api.get(`/user/invoices/${invoiceId.value}`) as Record<string, unknown>;
     invoice.value = (response.invoice as Record<string, unknown>) || response;
 
-    // Find booking line item
+    // Find booking line item — the API publishes the line's extra data as
+    // ``metadata`` (InvoiceLineItem.to_dict), as BookingConfirmationDetails reads.
     const lineItems = (invoice.value.line_items as Array<Record<string, unknown>>) || [];
     const bookingLineItem = lineItems.find(item => {
-      const extraData = item.extra_data as Record<string, unknown> | undefined;
-      return extraData?.plugin === 'booking';
+      const metadata = item.metadata as Record<string, unknown> | undefined;
+      return metadata?.plugin === 'booking';
     });
 
     if (bookingLineItem) {
-      const extraData = bookingLineItem.extra_data as Record<string, unknown>;
+      const extraData = bookingLineItem.metadata as Record<string, unknown>;
       bookingMeta.value = extraData;
 
       // Fetch resource details

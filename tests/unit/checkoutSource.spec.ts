@@ -21,7 +21,6 @@ function makeResource(pricing: BookableResource['pricing'], price = '100.00'): B
     capacity: 1,
     slot_duration_minutes: 60,
     price,
-    currency: 'EUR',
     price_unit: 'per_hour',
     availability: {},
     custom_fields_schema: null,

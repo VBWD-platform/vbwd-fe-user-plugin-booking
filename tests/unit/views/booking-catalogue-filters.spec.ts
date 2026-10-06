@@ -96,7 +96,6 @@ function makeItem(slug: string, tags: string[] = []) {
     name: `Resource ${slug}`,
     resource_type: 'room',
     price: '100.00',
-    currency: 'EUR',
     price_unit: 'per_hour',
     capacity: 1,
     image_url: null,

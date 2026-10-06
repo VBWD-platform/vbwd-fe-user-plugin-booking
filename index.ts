@@ -1,5 +1,5 @@
 import type { IPlugin, IPlatformSDK } from 'vbwd-view-component';
-import { bookingConfig } from './booking/bookingConfig';
+import { bookingConfig, loadBookingConfig } from './booking/bookingConfig';
 import en from './locales/en.json';
 import de from './locales/de.json';
 import es from './locales/es.json';
@@ -14,7 +14,7 @@ export const bookingPlugin: IPlugin = {
   description: 'Booking user surface plugin (Fe-User)',
   version: '26.6.1',
 
-  install(sdk: IPlatformSDK) {
+  async install(sdk: IPlatformSDK) {
     // Translations
     sdk.addTranslations('en', en);
     sdk.addTranslations('de', de);
@@ -74,7 +74,8 @@ export const bookingPlugin: IPlugin = {
       meta: { requiresAuth: false, cmsLayout: true },
     });
 
-    // Booking form — CMS page with configurable slug
+    // Booking form — CMS page with the admin-configurable slug (runtime config)
+    await loadBookingConfig();
     const formSlug = bookingConfig.bookingFormSlug;
     sdk.addRoute({
       path: `/${formSlug}/:slug`,
